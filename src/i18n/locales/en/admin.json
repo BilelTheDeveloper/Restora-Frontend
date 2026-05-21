@@ -17,12 +17,26 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "welcome": "Welcome back",
     "todayOrders": "Today's Orders",
     "customers": "Customers",
     "reservations": "Reservations",
     "revenue": "Today's Revenue",
     "recentOrders": "Recent Orders",
-    "noOrders": "No orders yet today"
+    "noOrders": "No orders yet today",
+    "modules": "Quick Access",
+    "modulesDesc": "Jump to any section of your restaurant",
+    "open": "Open",
+    "moduleDesc": {
+      "pos": "Process sales, take orders & manage payments",
+      "tables": "View table status, seat guests & manage floor",
+      "kitchen": "Live kitchen display for order preparation",
+      "menu": "Manage items, categories & pricing",
+      "orders": "Track all orders — dine-in, takeaway & delivery",
+      "reservations": "Handle bookings & guest scheduling",
+      "staff": "Manage your team roles & access",
+      "settings": "Configure restaurant profile & preferences"
+    }
   },
   "orders": {
     "title": "Orders",

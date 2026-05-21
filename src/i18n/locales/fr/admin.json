@@ -17,12 +17,26 @@
   },
   "dashboard": {
     "title": "Tableau de bord",
+    "welcome": "Bon retour",
     "todayOrders": "Commandes aujourd'hui",
     "customers": "Clients",
     "reservations": "Réservations",
     "revenue": "Chiffre du jour",
     "recentOrders": "Commandes récentes",
-    "noOrders": "Aucune commande aujourd'hui"
+    "noOrders": "Aucune commande aujourd'hui",
+    "modules": "Accès rapide",
+    "modulesDesc": "Accédez à n'importe quelle section de votre restaurant",
+    "open": "Ouvrir",
+    "moduleDesc": {
+      "pos": "Encaisser, prendre les commandes et gérer les paiements",
+      "tables": "État des tables, placement des clients et gestion de la salle",
+      "kitchen": "Affichage cuisine en direct pour la préparation",
+      "menu": "Gérer les articles, catégories et tarifs",
+      "orders": "Suivre toutes les commandes — sur place, à emporter et livraison",
+      "reservations": "Gérer les réservations et le planning des clients",
+      "staff": "Gérer votre équipe et les accès",
+      "settings": "Configurer le profil et les préférences du restaurant"
+    }
   },
   "orders": {
     "title": "Commandes",
