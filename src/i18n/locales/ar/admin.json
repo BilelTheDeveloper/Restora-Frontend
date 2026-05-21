@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "pos": "نقطة البيع",
+    "tables": "الطاولات",
+    "kitchen": "المطبخ",
+    "menu": "القائمة",
+    "orders": "الطلبات",
+    "reservations": "الحجوزات",
+    "staff": "الموظفون",
+    "settings": "الإعدادات",
+    "inventory": "المخزون",
+    "delivery": "التوصيل",
+    "analytics": "التحليلات",
+    "customers": "العملاء",
+    "marketing": "التسويق"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "todayOrders": "طلبات اليوم",
+    "customers": "العملاء",
+    "reservations": "الحجوزات",
+    "revenue": "إيرادات اليوم",
+    "recentOrders": "آخر الطلبات",
+    "noOrders": "لا توجد طلبات اليوم"
+  },
+  "orders": {
+    "title": "الطلبات",
+    "new": "طلب جديد",
+    "dineIn": "داخل المطعم",
+    "takeaway": "للاصطحاب",
+    "delivery": "توصيل",
+    "qr": "طلب QR",
+    "orderNumber": "طلب رقم",
+    "table": "طاولة",
+    "total": "المجموع",
+    "status": "الحالة",
+    "time": "الوقت"
+  },
+  "tables": {
+    "title": "الطاولات",
+    "available": "متاحة",
+    "occupied": "مشغولة",
+    "reserved": "محجوزة",
+    "cleaning": "تنظيف",
+    "addTable": "إضافة طاولة",
+    "capacity": "السعة",
+    "floor": "الطابق"
+  },
+  "kitchen": {
+    "title": "شاشة المطبخ",
+    "pending": "في الانتظار",
+    "preparing": "قيد التحضير",
+    "ready": "جاهز",
+    "newOrder": "طلب جديد",
+    "markReady": "تحديد كجاهز",
+    "preparingTime": "في التحضير منذ"
+  },
+  "menu": {
+    "title": "قائمة الطعام",
+    "addCategory": "إضافة فئة",
+    "addItem": "إضافة صنف",
+    "category": "الفئة",
+    "price": "السعر",
+    "available": "متاح",
+    "unavailable": "غير متاح"
+  },
+  "reservations": {
+    "title": "الحجوزات",
+    "new": "حجز جديد",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "guests": "عدد الأشخاص",
+    "name": "الاسم",
+    "phone": "الهاتف",
+    "table": "الطاولة",
+    "status": "الحالة",
+    "notes": "ملاحظات"
+  },
+  "staff": {
+    "title": "الموظفون",
+    "addMember": "إضافة موظف",
+    "role": "الدور",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "status": "الحالة"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "restaurant": "بيانات المطعم",
+    "hours": "ساعات العمل",
+    "payments": "المدفوعات",
+    "notifications": "الإشعارات",
+    "taxes": "الضرائب والرسوم",
+    "theme": "المظهر"
+  }
+}
