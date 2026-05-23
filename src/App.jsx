@@ -26,7 +26,8 @@ import Staff from './pages/admin/Staff';
 import Settings from './pages/admin/Settings';
 import KYC from './pages/admin/KYC';
 import RestaurantSetup from './pages/admin/RestaurantSetup';
-import Themes from './pages/admin/Themes';
+import Themes    from './pages/admin/Themes';
+import VIPSetup  from './pages/admin/VIPSetup';
 
 // Super-admin (platform) layout & pages
 import SuperAdminLayout from './components/layout/SuperAdminLayout';
@@ -132,6 +133,7 @@ export default function App() {
             <Route path="kyc"          element={<KYC />} />
             <Route path="setup"        element={<RestaurantSetup />} />
             <Route path="themes"       element={<Themes />} />
+            <Route path="vip-setup"    element={<VIPSetup />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
