@@ -24,6 +24,8 @@ import Settings from './pages/admin/Settings';
 import KYC from './pages/admin/KYC';
 import RestaurantSetup from './pages/admin/RestaurantSetup';
 import Themes from './pages/admin/Themes';
+import Health from './pages/admin/Health';
+import SecurityPage from './pages/admin/Security';
 
 // Super-admin (platform) layout & pages
 import SuperAdminLayout from './components/layout/SuperAdminLayout';
@@ -102,6 +104,8 @@ export default function App() {
           <Route path="kyc"         element={<KYC />} />
           <Route path="setup"       element={<RestaurantSetup />} />
           <Route path="themes"      element={<Themes />} />
+          <Route path="health"      element={<Health />} />
+          <Route path="security"    element={<SecurityPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
