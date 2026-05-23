@@ -626,9 +626,13 @@ export default function VIPSetup() {
   // ── Add helpers ──────────────────────────────────────────────
   const addTable = useCallback((shape) => {
     pushHistory();
+    // Find lowest unused table number (prevents duplicate-key on save)
+    const used = new Set(tables.map(t => String(t.number)));
+    let n = 1;
+    while (used.has(String(n))) n++;
     const newT = {
       _localId:  `new-${localIdCtr++}`,
-      number:    String(tables.length + 1),
+      number:    String(n),
       capacity:  4,
       shape,
       position:  { x: snap(220 + (tables.length % 4) * 120), y: snap(200 + Math.floor(tables.length / 4) * 130) },
