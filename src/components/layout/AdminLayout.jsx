@@ -7,7 +7,6 @@ import {
   BookOpen, ClipboardList, CalendarDays, Users, Settings,
   LogOut, PanelLeftClose, PanelLeftOpen, Bell, Search,
   Utensils, Lock, ShieldCheck, Store, ShieldAlert, Palette,
-  Activity, Shield,
 } from 'lucide-react';
 
 // ── Navigation ─────────────────────────────────────────────
@@ -34,9 +33,7 @@ const NAV_GROUPS = [
   {
     label: 'System',
     items: [
-      { to: '/admin/settings', icon: Settings,  label: 'Settings' },
-      { to: '/admin/health',   icon: Activity,  label: 'Health'   },
-      { to: '/admin/security', icon: Shield,    label: 'Security' },
+      { to: '/admin/settings', icon: Settings, label: 'Settings' },
     ],
   },
 ];
