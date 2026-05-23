@@ -287,8 +287,8 @@ function SelfieStep({ value, onChange }) {
               </>
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 dark:bg-white/3">
-                <span className="text-xl font-bold text-gray-200 dark:text-white/10">{i + 1}</span>
-                <span className="text-[9px] text-gray-400 font-medium">{['Front', 'Left', 'Right'][i]}</span>
+                <span className="text-xl font-bold text-gray-300 dark:text-white/15">{i + 1}</span>
+                <span className="text-[9px] text-gray-400 dark:text-gray-500 font-medium">{['Front', 'Left', 'Right'][i]}</span>
               </div>
             )}
           </div>

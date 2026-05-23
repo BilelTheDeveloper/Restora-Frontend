@@ -14,9 +14,9 @@ import {
 function FormField({ label, children, hint }) {
   return (
     <div className="space-y-1.5">
-      <label className="block text-[11px] font-semibold text-gray-400 uppercase tracking-wide">{label}</label>
+      <label className="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">{label}</label>
       {children}
-      {hint && <p className="text-[10px] text-gray-600">{hint}</p>}
+      {hint && <p className="text-[10px] text-gray-400 dark:text-gray-600">{hint}</p>}
     </div>
   );
 }
@@ -24,13 +24,13 @@ function FormField({ label, children, hint }) {
 function StyledInput({ icon: Icon, className = '', ...props }) {
   return (
     <div className={[
-      'flex items-center gap-2.5 bg-white/4 border border-white/8 rounded-xl px-3.5 py-2.5 transition-all duration-150',
+      'flex items-center gap-2.5 bg-gray-100 dark:bg-white/4 border border-gray-200 dark:border-white/8 rounded-xl px-3.5 py-2.5 transition-all duration-150',
       'focus-within:border-orange-500/50 focus-within:bg-orange-500/5 focus-within:shadow-[0_0_0_3px_rgba(249,115,22,0.08)]',
       className,
     ].join(' ')}>
-      {Icon && <Icon size={14} className="text-gray-500 shrink-0" />}
+      {Icon && <Icon size={14} className="text-gray-400 dark:text-gray-500 shrink-0" />}
       <input
-        className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 outline-none min-w-0"
+        className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 outline-none min-w-0"
         {...props}
       />
     </div>
@@ -40,14 +40,14 @@ function StyledInput({ icon: Icon, className = '', ...props }) {
 function PasswordInput({ value, onChange, placeholder }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex items-center gap-2.5 bg-white/4 border border-white/8 rounded-xl px-3.5 py-2.5 transition-all duration-150 focus-within:border-orange-500/50 focus-within:bg-orange-500/5 focus-within:shadow-[0_0_0_3px_rgba(249,115,22,0.08)]">
-      <Lock size={14} className="text-gray-500 shrink-0" />
+    <div className="flex items-center gap-2.5 bg-gray-100 dark:bg-white/4 border border-gray-200 dark:border-white/8 rounded-xl px-3.5 py-2.5 transition-all duration-150 focus-within:border-orange-500/50 focus-within:bg-orange-500/5 focus-within:shadow-[0_0_0_3px_rgba(249,115,22,0.08)]">
+      <Lock size={14} className="text-gray-400 dark:text-gray-500 shrink-0" />
       <input
         type={show ? 'text' : 'password'}
         value={value}
         onChange={onChange}
         placeholder={placeholder || '••••••••'}
-        className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 outline-none min-w-0"
+        className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 outline-none min-w-0"
       />
       <button type="button" onClick={() => setShow(v => !v)} className="text-gray-600 hover:text-gray-300 transition-colors shrink-0">
         {show ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -61,7 +61,7 @@ function ToggleSwitch({ checked, onChange }) {
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className={`relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 ${checked ? 'bg-orange-500' : 'bg-white/10'}`}
+      className={`relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 ${checked ? 'bg-orange-500' : 'bg-gray-200 dark:bg-white/10'}`}
     >
       <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
     </button>
@@ -73,7 +73,7 @@ function Btn({ onClick, loading, children, disabled, variant = 'primary', size =
   const sizes = { sm: 'text-xs px-4 py-2', md: 'text-sm px-5 py-2.5' };
   const variants = {
     primary: 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/20',
-    ghost:   'bg-white/5 hover:bg-white/8 border border-white/10 text-gray-300 hover:text-white',
+    ghost:   'bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/8 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white',
   };
   return (
     <button onClick={onClick} disabled={loading || disabled} className={`${base} ${sizes[size]} ${variants[variant]}`}>
@@ -92,7 +92,7 @@ function ErrorBox({ msg }) {
   );
 }
 
-function Divider() { return <div className="border-t border-white/6" />; }
+function Divider() { return <div className="border-t border-gray-100 dark:border-white/6" />; }
 
 // ── OTP 6-box input ────────────────────────────────────────────────────────────
 
@@ -137,10 +137,10 @@ function OTPInput({ value, onChange }) {
           onKeyDown={e => handleKeyDown(i, e)}
           onPaste={i === 0 ? handlePaste : undefined}
           className={[
-            'w-11 h-12 text-center text-xl font-bold rounded-xl border transition-all duration-150 outline-none bg-white/5 text-white',
+            'w-11 h-12 text-center text-xl font-bold rounded-xl border transition-all duration-150 outline-none bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white',
             d.trim()
               ? 'border-orange-500/60 bg-orange-500/10 shadow-[0_0_10px_rgba(249,115,22,0.15)]'
-              : 'border-white/10 focus:border-orange-500/40 focus:bg-orange-500/5',
+              : 'border-gray-200 dark:border-white/10 focus:border-orange-500/40 focus:bg-orange-500/5',
           ].join(' ')}
         />
       ))}
@@ -164,7 +164,7 @@ function PasswordStrength({ password }) {
     <div className="mt-2 space-y-1.5">
       <div className="flex gap-1">
         {[1,2,3,4].map(n => (
-          <div key={n} className={`h-1 flex-1 rounded-full transition-all ${n <= score ? meta?.bar : 'bg-white/8'}`} />
+          <div key={n} className={`h-1 flex-1 rounded-full transition-all ${n <= score ? meta?.bar : 'bg-gray-200 dark:bg-white/8'}`} />
         ))}
       </div>
       {meta && <p className={`text-[10px] font-semibold ${meta.text}`}>{meta.label}</p>}
@@ -178,14 +178,14 @@ function ContactCard({ icon: Icon, iconBg, iconColor, label, current, step, newV
   onNewChange, onCodeChange, onEdit, onCancel, onSendCode, onVerify,
   loading, placeholder, inputType, onResend }) {
   return (
-    <div className="p-4 rounded-2xl bg-white/3 border border-white/6 transition-all hover:border-white/10">
+    <div className="p-4 rounded-2xl bg-gray-50 dark:bg-white/3 border border-gray-100 dark:border-white/6 transition-all hover:border-gray-200 dark:hover:border-white/10">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-9 h-9 rounded-xl ${iconBg} flex items-center justify-center shrink-0`}>
             <Icon size={15} className={iconColor} />
           </div>
           <div>
-            <p className="text-xs font-semibold text-white">{label}</p>
+            <p className="text-xs font-semibold text-gray-900 dark:text-white">{label}</p>
             <p className="text-[11px] text-gray-500 mt-0.5">{current || 'Not set'}</p>
           </div>
         </div>
@@ -208,7 +208,7 @@ function ContactCard({ icon: Icon, iconBg, iconColor, label, current, step, newV
 
       {step === 'otp' && (
         <div className="mt-4 space-y-4">
-          <p className="text-xs text-gray-400">6-digit code sent to <span className="text-white font-semibold">{newValue}</span></p>
+          <p className="text-xs text-gray-500">6-digit code sent to <span className="text-gray-900 dark:text-white font-semibold">{newValue}</span></p>
           <OTPInput value={code} onChange={onCodeChange} />
           <div className="flex gap-2 flex-wrap">
             <Btn size="sm" onClick={onVerify} loading={loading} disabled={(code || '').replace(/ /g,'').length < 6}>
@@ -300,7 +300,7 @@ function AccountTab({ user }) {
         </div>
         <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleAvatar} />
         <div>
-          <p className="text-sm font-bold text-white">{user?.name || '—'}</p>
+          <p className="text-sm font-bold text-gray-900 dark:text-white">{user?.name || '—'}</p>
           <p className="text-xs text-gray-500 capitalize mt-0.5">{user?.role || 'owner'}</p>
           <button onClick={() => fileRef.current?.click()} className="mt-2.5 text-[11px] text-orange-400 hover:text-orange-300 font-semibold flex items-center gap-1 transition-colors">
             <Camera size={11} /> Change photo
@@ -441,14 +441,14 @@ function SecurityTab({ user }) {
         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-4">Forgot Password?</p>
 
         {resetStep === 'idle' && (
-          <div className="p-5 rounded-2xl bg-white/3 border border-white/6">
+          <div className="p-5 rounded-2xl bg-gray-50 dark:bg-white/3 border border-gray-100 dark:border-white/6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-violet-500/15 flex items-center justify-center shrink-0">
                 <ShieldCheck size={18} className="text-violet-400" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">Reset via email code</p>
-                <p className="text-xs text-gray-500">We'll send a 6-digit code to <span className="text-gray-300">{user?.email}</span></p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">Reset via email code</p>
+                <p className="text-xs text-gray-500">We'll send a 6-digit code to <span className="text-gray-700 dark:text-gray-300">{user?.email}</span></p>
               </div>
             </div>
             <Btn size="sm"
@@ -465,8 +465,8 @@ function SecurityTab({ user }) {
         {resetStep === 'otp' && (
           <div className="space-y-5">
             <div className="text-center">
-              <p className="text-sm text-gray-400 mb-1">Code sent to</p>
-              <p className="text-sm font-bold text-white">{user?.email}</p>
+              <p className="text-sm text-gray-500 mb-1">Code sent to</p>
+              <p className="text-sm font-bold text-gray-900 dark:text-white">{user?.email}</p>
             </div>
 
             <OTPInput value={resetCode} onChange={setResetCode} />
@@ -536,12 +536,12 @@ function NotificationsTab({ user }) {
       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600">Notification Preferences</p>
       <div className="space-y-2">
         {items.map(({ key, label, desc, icon: Icon, bg, tc }) => (
-          <div key={key} className="flex items-center gap-4 p-4 rounded-2xl bg-white/3 border border-white/6 hover:border-white/10 transition-colors">
+          <div key={key} className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-white/3 border border-gray-100 dark:border-white/6 hover:border-gray-200 dark:hover:border-white/10 transition-colors">
             <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
               <Icon size={15} className={tc} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white">{label}</p>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">{label}</p>
               <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
             </div>
             <ToggleSwitch
@@ -590,7 +590,7 @@ function RestaurantTab() {
         <textarea
           rows={3}
           placeholder="Describe your restaurant…"
-          className="w-full bg-white/4 border border-white/8 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-orange-500/50 focus:bg-orange-500/5 transition-all resize-none"
+          className="w-full bg-gray-100 dark:bg-white/4 border border-gray-200 dark:border-white/8 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 outline-none focus:border-orange-500/50 focus:bg-orange-500/5 transition-all resize-none"
         />
       </FormField>
       <Btn><Save size={14} /> Save Changes</Btn>
@@ -605,10 +605,10 @@ function HoursTab() {
   return (
     <div className="space-y-5">
       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600">Opening Hours</p>
-      <div className="divide-y divide-white/4">
+      <div className="divide-y divide-gray-100 dark:divide-white/4">
         {DAYS.map(day => (
           <div key={day} className="flex items-center gap-4 py-3.5">
-            <p className="w-28 shrink-0 text-sm font-medium text-gray-200">{day}</p>
+            <p className="w-28 shrink-0 text-sm font-medium text-gray-800 dark:text-gray-200">{day}</p>
             <button
               onClick={() => upd(day, 'open', !hours[day].open)}
               className={`w-10 h-5 rounded-full relative shrink-0 transition-colors duration-200 ${hours[day].open ? 'bg-orange-500' : 'bg-white/10'}`}
@@ -618,10 +618,10 @@ function HoursTab() {
             {hours[day].open ? (
               <div className="flex items-center gap-2 flex-1">
                 <input type="time" value={hours[day].from} onChange={e => upd(day, 'from', e.target.value)}
-                  className="bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white outline-none focus:border-orange-500/50 transition-colors [color-scheme:dark]" />
-                <span className="text-xs text-gray-600">to</span>
+                  className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-2 py-1.5 text-xs text-gray-900 dark:text-white outline-none focus:border-orange-500/50 transition-colors" />
+                <span className="text-xs text-gray-400">to</span>
                 <input type="time" value={hours[day].to} onChange={e => upd(day, 'to', e.target.value)}
-                  className="bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white outline-none focus:border-orange-500/50 transition-colors [color-scheme:dark]" />
+                  className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-2 py-1.5 text-xs text-gray-900 dark:text-white outline-none focus:border-orange-500/50 transition-colors" />
               </div>
             ) : (
               <span className="text-xs text-gray-600 flex-1">Closed</span>
@@ -639,9 +639,9 @@ function PaymentsTab() {
   const tog = k => setV(p => ({ ...p, [k]: !p[k] }));
 
   const Row = ({ k, label, desc }) => (
-    <div className="flex items-center justify-between py-3.5 border-b border-white/4 last:border-0">
+    <div className="flex items-center justify-between py-3.5 border-b border-gray-100 dark:border-white/4 last:border-0">
       <div>
-        <p className="text-sm font-medium text-white">{label}</p>
+        <p className="text-sm font-medium text-gray-900 dark:text-white">{label}</p>
         {desc && <p className="text-xs text-gray-500 mt-0.5">{desc}</p>}
       </div>
       <ToggleSwitch checked={v[k]} onChange={() => tog(k)} />
@@ -652,7 +652,7 @@ function PaymentsTab() {
     <div className="space-y-6">
       <div>
         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-4">Payment Methods</p>
-        <div className="bg-white/3 border border-white/6 rounded-2xl px-4">
+        <div className="bg-gray-50 dark:bg-white/3 border border-gray-100 dark:border-white/6 rounded-2xl px-4">
           <Row k="cash"   label="Cash"               desc="Accept cash payments" />
           <Row k="card"   label="Card / POS Terminal" desc="Visa, Mastercard, etc." />
           <Row k="online" label="Online Payment"      desc="Flouci, Paymee & others" />
@@ -660,10 +660,10 @@ function PaymentsTab() {
       </div>
       <div>
         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-4">Taxes & Fees</p>
-        <div className="bg-white/3 border border-white/6 rounded-2xl px-4">
+        <div className="bg-gray-50 dark:bg-white/3 border border-gray-100 dark:border-white/6 rounded-2xl px-4">
           <Row k="tva" label="Apply TVA" desc={`Currently ${v.tvaRate}%`} />
           {v.tva && (
-            <div className="py-3.5 border-t border-white/4">
+            <div className="py-3.5 border-t border-gray-100 dark:border-white/4">
               <FormField label="TVA Rate (%)">
                 <StyledInput defaultValue={v.tvaRate} placeholder="19" />
               </FormField>
@@ -690,10 +690,10 @@ function AppearanceTab() {
   return (
     <div className="space-y-6">
       <FormField label="Theme">
-        <div className="flex bg-white/5 rounded-xl p-1 gap-1 w-fit border border-white/8">
+        <div className="flex bg-gray-100 dark:bg-white/5 rounded-xl p-1 gap-1 w-fit border border-gray-200 dark:border-white/8">
           {['light','dark','system'].map(t => (
             <button key={t} onClick={() => setTheme(t)}
-              className={`px-4 py-1.5 text-xs font-semibold rounded-lg capitalize transition-all ${theme === t ? 'bg-white/10 text-white shadow-sm' : 'text-gray-500 hover:text-gray-300'}`}>
+              className={`px-4 py-1.5 text-xs font-semibold rounded-lg capitalize transition-all ${theme === t ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-300'}`}>
               {t}
             </button>
           ))}
@@ -704,7 +704,7 @@ function AppearanceTab() {
         <div className="flex gap-2 flex-wrap">
           {[{ k:'en',label:'🇺🇸 English'},{ k:'fr',label:'🇫🇷 Français'},{ k:'ar',label:'🇹🇳 العربية'}].map(l => (
             <button key={l.k} onClick={() => setLang(l.k)}
-              className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all ${lang === l.k ? 'bg-orange-500 text-white border-orange-500' : 'border-white/10 text-gray-500 hover:border-orange-500/40 hover:text-gray-300'}`}>
+              className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all ${lang === l.k ? 'bg-orange-500 text-white border-orange-500' : 'border-gray-200 dark:border-white/10 text-gray-500 hover:border-orange-500/40 hover:text-gray-800 dark:hover:text-gray-300'}`}>
               {l.label}
             </button>
           ))}
@@ -786,7 +786,7 @@ export default function Settings() {
                       'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left',
                       activeTab === key
                         ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/20'
-                        : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-200',
+                        : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-800 dark:hover:text-gray-200',
                     ].join(' ')}>
                     <Icon size={15} className="shrink-0" />
                     {label}

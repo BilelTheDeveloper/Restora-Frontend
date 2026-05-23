@@ -190,7 +190,7 @@ function Toggle({ label, value, onChange }) {
       <span>{label}</span>
       {value
         ? <ToggleRight size={20} className="text-orange-500" />
-        : <ToggleLeft  size={20} className="text-gray-300 dark:text-white/20" />
+        : <ToggleLeft  size={20} className="text-gray-500 dark:text-gray-400" />
       }
     </button>
   );
@@ -431,7 +431,7 @@ export default function Themes() {
 
           {/* Identity */}
           <div className="space-y-3">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-300 dark:text-white/20 flex items-center gap-1.5">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
               <Type size={10} /> Identity
             </p>
             <FormField label="Slogan / Tagline">
@@ -459,7 +459,7 @@ export default function Themes() {
 
           {/* Visuals */}
           <div className="space-y-3">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-300 dark:text-white/20 flex items-center gap-1.5">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
               <Sparkles size={10} /> Visual Style
             </p>
 
@@ -503,7 +503,7 @@ export default function Themes() {
 
           {/* Sections */}
           <div className="space-y-1">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-300 dark:text-white/20 mb-2 flex items-center gap-1.5">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
               <LayoutTemplate size={10} /> Show Sections
             </p>
             <Toggle label="About / Our Story"  value={config.showAbout}   onChange={v => setC('showAbout',   v)} />
@@ -514,7 +514,7 @@ export default function Themes() {
 
           {/* Footer */}
           <div className="space-y-3">
-            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-300 dark:text-white/20 flex items-center gap-1.5">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
               <ImageIcon size={10} /> Footer
             </p>
             <FormField label="Footer Text">
