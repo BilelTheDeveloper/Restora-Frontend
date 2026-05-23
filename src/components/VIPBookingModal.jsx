@@ -69,10 +69,14 @@ function FloorPlan({ tables, zones, room, bookedIds, selectedId, primaryColor, o
 
   if (!tables.length) {
     return (
-      <div className="flex flex-col items-center justify-center py-14 text-center">
-        <Crown size={32} className="opacity-20 mb-3" style={{ color: primaryColor }}/>
-        <p className="text-sm text-amber-900/40 font-medium">Floor plan not yet configured</p>
-        <p className="text-xs text-amber-900/25 mt-1">The owner hasn&apos;t set up tables yet</p>
+      <div className="flex flex-col items-center justify-center py-14 text-center px-6">
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: `${primaryColor}12` }}>
+          <Crown size={28} style={{ color: primaryColor, opacity: 0.5 }}/>
+        </div>
+        <p className="text-sm font-bold text-amber-900/50 mb-1">No tables available</p>
+        <p className="text-xs text-amber-900/30 leading-relaxed max-w-[200px]">
+          VIP booking is not yet configured for this restaurant. Please contact us directly to reserve.
+        </p>
       </div>
     );
   }
@@ -307,10 +311,14 @@ export default function VIPBookingModal({ slug, restaurantName, primaryColor = '
   });
   const setF = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
-  // Fetch floor plan
+  // Fetch floor plan — handles both old (array) and new ({ tables, zones, room }) API shape
   const { data: floorData } = useQuery({
     queryKey: ['vip-floor', slug],
-    queryFn: () => api.get(`/restaurants/${slug}/tables`).then(r => r.data.data ?? {}),
+    queryFn: () => api.get(`/restaurants/${slug}/tables`).then(r => {
+      const raw = r.data.data;
+      if (Array.isArray(raw)) return { tables: raw, zones: [], room: null };
+      return raw ?? { tables: [], zones: [], room: null };
+    }),
     enabled: !!slug,
   });
   const tables = floorData?.tables ?? [];
