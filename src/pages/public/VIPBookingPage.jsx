@@ -73,18 +73,27 @@ function FloorPlan({ tables, zones, room, bookedIds, selectedId, primaryColor, o
     );
   }
 
-  // viewBox — room bounds + PAD on every side so no chair is ever clipped
+  // viewBox — union of room bounds AND all table positions so nothing is ever clipped
+  // Tables can be placed outside the room boundary in the builder, so we must
+  // encompass both the room rectangle and every table center (PAD covers chairs).
   let vx, vy, vw, vh;
-  if (room) {
-    vx = room.x - PAD; vy = room.y - PAD;
-    vw = room.w + PAD * 2; vh = room.h + PAD * 2;
-  } else {
+  {
     const xs = tables.map(t => t.position?.x ?? 200);
     const ys = tables.map(t => t.position?.y ?? 200);
-    vx = Math.max(0, Math.min(...xs) - PAD);
-    vy = Math.max(0, Math.min(...ys) - PAD);
-    vw = Math.max(600, Math.max(...xs) - vx + PAD);
-    vh = Math.max(400, Math.max(...ys) - vy + PAD);
+    let minX = tables.length ? Math.min(...xs) : (room?.x ?? 100);
+    let minY = tables.length ? Math.min(...ys) : (room?.y ?? 100);
+    let maxX = tables.length ? Math.max(...xs) : (room ? room.x + room.w : 700);
+    let maxY = tables.length ? Math.max(...ys) : (room ? room.y + room.h : 500);
+    if (room) {
+      minX = Math.min(minX, room.x);
+      minY = Math.min(minY, room.y);
+      maxX = Math.max(maxX, room.x + room.w);
+      maxY = Math.max(maxY, room.y + room.h);
+    }
+    vx = minX - PAD;
+    vy = minY - PAD;
+    vw = Math.max(300, maxX - minX + PAD * 2);
+    vh = Math.max(200, maxY - minY + PAD * 2);
   }
 
   return (
