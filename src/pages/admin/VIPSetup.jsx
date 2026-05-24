@@ -920,10 +920,13 @@ export default function VIPSetup() {
     return { x: (svgX - CX) / z + CX, y: (svgY - CY) / z + CY };
   }, []);
 
-  // ── Generic drag start — with threshold ───────────────────────
+  // ── Generic drag start — pointer capture deferred until threshold ─
+  // DO NOT call setPointerCapture here. If we capture on pointer-down,
+  // the subsequent click event fires on the SVG (not the element), which
+  // triggers handleCanvasClick → setSelected(null), wiping the selection.
+  // Capture is set the first time the pointer actually moves > DRAG_THRESHOLD.
   const startDrag = useCallback((e, data) => {
-    dragRef.current = { ...data, startClientX: e.clientX, startClientY: e.clientY, moved: false };
-    svgRef.current.setPointerCapture(e.pointerId);
+    dragRef.current = { ...data, pointerId: e.pointerId, startClientX: e.clientX, startClientY: e.clientY, moved: false };
   }, []);
 
   const startTableDrag = useCallback((e, id) => {
@@ -936,12 +939,14 @@ export default function VIPSetup() {
   const startZoneDrag = useCallback((e, id) => {
     const z = floors.find(f => f.id === activeFloorIdRef.current)?.zones?.find(z => z.id === id);
     const w = toWorld(e.clientX, e.clientY);
+    setSelected({ type: 'zone', id }); // select immediately on pointer-down
     startDrag(e, { type: 'zone-move', id, startMX: w.x, startMY: w.y, startOX: z?.x ?? 0, startOY: z?.y ?? 0 });
   }, [floors, toWorld, startDrag]);
 
   const startZoneResize = useCallback((e, id, corner) => {
     const z = floors.find(f => f.id === activeFloorIdRef.current)?.zones?.find(z => z.id === id);
     const w = toWorld(e.clientX, e.clientY);
+    setSelected({ type: 'zone', id });
     startDrag(e, { type: 'zone-resize', id, corner, startMX: w.x, startMY: w.y, startOX: z?.x ?? 0, startOY: z?.y ?? 0, startOW: z?.w ?? 160, startOH: z?.h ?? 100 });
   }, [floors, toWorld, startDrag]);
 
@@ -985,11 +990,13 @@ export default function VIPSetup() {
     if (!dragRef.current) return;
     const drag = dragRef.current;
 
-    // Enforce drag threshold
+    // Enforce drag threshold — capture pointer only once movement is real
     if (!drag.moved) {
       const dist = Math.hypot(e.clientX - drag.startClientX, e.clientY - drag.startClientY);
       if (dist < DRAG_THRESHOLD) return;
       drag.moved = true;
+      // Capture here (not on pointer-down) so click events still fire on elements
+      svgRef.current.setPointerCapture(drag.pointerId);
       pushHistory();
     }
 
