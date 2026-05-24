@@ -315,7 +315,7 @@ export default function VIPBookingModal({ slug, restaurantName, primaryColor = '
   const { data: floorData } = useQuery({
     queryKey: ['vip-floor', slug],
     queryFn: () => api.get(`/restaurants/${slug}/tables`).then(r => {
-      const raw = r.data.data;
+      const raw = r.data;
       if (Array.isArray(raw)) return { tables: raw, zones: [], room: null };
       return raw ?? { tables: [], zones: [], room: null };
     }),
@@ -330,7 +330,7 @@ export default function VIPBookingModal({ slug, restaurantName, primaryColor = '
     queryKey: ['vip-avail', slug, form.date, form.time],
     queryFn: () => api.get(`/restaurants/${slug}/tables/availability`, {
       params: { date: form.date, time: form.time },
-    }).then(r => r.data.data),
+    }).then(r => r.data),
     enabled: !!(slug && form.date && form.time),
   });
   const bookedIds = availData?.bookedTableIds ?? [];
