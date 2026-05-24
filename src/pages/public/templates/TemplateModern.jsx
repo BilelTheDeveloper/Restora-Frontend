@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Phone, ExternalLink, ArrowRight, ChevronDown, Crown, Clock } from 'lucide-react';
-import VIPBookingModal from '../../../components/VIPBookingModal';
 
 const DAYS_ORDER = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
@@ -14,7 +13,7 @@ export default function TemplateModern({ data }) {
     isHalal, rating, reviewCount,
   } = data;
 
-  const [showVIP, setShowVIP] = useState(false);
+  const navigate = useNavigate();
   const hero = heroBackground || coverImage;
   const clr  = primaryColor;
   const sortedHours = DAYS_ORDER.map(d => openingHours?.find(h => h.day === d)).filter(Boolean);
@@ -74,7 +73,7 @@ export default function TemplateModern({ data }) {
                 {discoverText} <ChevronDown size={15} className="group-hover:translate-y-0.5 transition-transform" />
               </button>
               {vipService?.enabled && (
-                <button onClick={() => setShowVIP(true)}
+                <button onClick={() => navigate(`/r/${slug}/vip`)}
                         className="flex items-center gap-3 px-8 py-4 rounded-full text-sm font-black tracking-wider uppercase text-black transition-all hover:scale-105 hover:shadow-2xl"
                         style={{ backgroundColor: clr, boxShadow: `0 0 40px ${clr}55` }}>
                   <Crown size={15} /> {vipCtaText}
@@ -248,7 +247,7 @@ export default function TemplateModern({ data }) {
               <p className="text-lg font-black tracking-widest uppercase mb-2">{name}</p>
               {slogan && <p className="text-xs text-white/30 italic">{slogan}</p>}
               {vipService?.enabled && (
-                <button onClick={() => setShowVIP(true)}
+                <button onClick={() => navigate(`/r/${slug}/vip`)}
                         className="mt-4 flex items-center gap-1.5 text-xs font-bold transition-all hover:scale-105"
                         style={{ color: clr }}>
                   <Crown size={11} /> Book VIP Table
@@ -310,9 +309,6 @@ export default function TemplateModern({ data }) {
         </div>
       </footer>
 
-      {showVIP && (
-        <VIPBookingModal slug={slug} restaurantName={name} primaryColor={clr} onClose={() => setShowVIP(false)} />
-      )}
     </div>
   );
 }

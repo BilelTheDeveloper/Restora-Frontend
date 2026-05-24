@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Phone, Clock, ExternalLink, ChevronDown, Crown } from 'lucide-react';
-import VIPBookingModal from '../../../components/VIPBookingModal';
 
 function IGIcon({ size = 14 }) {
   return (
@@ -44,7 +44,7 @@ export default function TemplatePrestige({ data }) {
     isHalal, rating, reviewCount,
   } = data;
 
-  const [showVIP, setShowVIP] = useState(false);
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [activeMenuCat, setActiveMenuCat] = useState(0);
   const [lightboxImg, setLightboxImg] = useState(null);
@@ -96,7 +96,7 @@ export default function TemplatePrestige({ data }) {
           <div className="flex items-center gap-3">
             {vipService?.enabled && (
               <button
-                onClick={() => setShowVIP(true)}
+                onClick={() => navigate(`/r/${slug}/vip`)}
                 className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all hover:scale-105"
                 style={{ backgroundColor: clr, color: '#000', boxShadow: `0 4px 20px rgba(${rgb},0.4)` }}
               >
@@ -182,7 +182,7 @@ export default function TemplatePrestige({ data }) {
             </button>
             {vipService?.enabled && (
               <button
-                onClick={() => setShowVIP(true)}
+                onClick={() => navigate(`/r/${slug}/vip`)}
                 className="group flex items-center gap-3 px-8 py-4 rounded-2xl text-sm font-black transition-all hover:scale-105 hover:shadow-2xl"
                 style={{ backgroundColor: clr, color: '#000', boxShadow: `0 8px 40px rgba(${rgb},0.5)` }}
               >
@@ -228,7 +228,7 @@ export default function TemplatePrestige({ data }) {
           )}
           <div className="flex-1" />
           {vipService?.enabled && (
-            <button onClick={() => setShowVIP(true)} className="flex items-center gap-1.5 font-bold transition-colors" style={{ color: clr }}>
+            <button onClick={() => navigate(`/r/${slug}/vip`)} className="flex items-center gap-1.5 font-bold transition-colors" style={{ color: clr }}>
               <Crown size={11} /> VIP Reservations
             </button>
           )}
@@ -465,15 +465,6 @@ export default function TemplatePrestige({ data }) {
         </div>
       )}
 
-      {/* ── VIP Modal ── */}
-      {showVIP && (
-        <VIPBookingModal
-          slug={slug}
-          restaurantName={name}
-          primaryColor={clr}
-          onClose={() => setShowVIP(false)}
-        />
-      )}
     </div>
   );
 }

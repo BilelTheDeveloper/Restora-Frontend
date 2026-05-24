@@ -9,6 +9,7 @@ import { adminService } from './services/adminService';
 import PublicLayout from './components/layout/PublicLayout';
 import Home from './pages/public/Home';
 import RestaurantPage from './pages/public/RestaurantPage';
+import VIPBookingPage from './pages/public/VIPBookingPage';
 import Maintenance from './pages/public/Maintenance';
 
 // Auth pages
@@ -120,8 +121,9 @@ export default function App() {
             <Route path="/" element={<Home />} />
           </Route>
 
-          {/* Restaurant public page — standalone */}
-          <Route path="/r/:slug" element={<RestaurantPage />} />
+          {/* Restaurant public pages — standalone */}
+          <Route path="/r/:slug"     element={<RestaurantPage />} />
+          <Route path="/r/:slug/vip" element={<VIPBookingPage />} />
 
           {/* Auth */}
           <Route path="/login"    element={<Login />} />

@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Phone, ExternalLink, Star, ChevronDown, Crown, Clock } from 'lucide-react';
-import VIPBookingModal from '../../../components/VIPBookingModal';
 
 const DAYS_ORDER = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
@@ -21,7 +20,7 @@ export default function TemplateVivid({ data }) {
     isHalal, rating, reviewCount,
   } = data;
 
-  const [showVIP, setShowVIP] = useState(false);
+  const navigate = useNavigate();
   const hero = heroBackground || coverImage;
   const clr  = primaryColor;
   const rgb  = hexToRgb(clr.startsWith('#') ? clr : '#f97316');
@@ -102,7 +101,7 @@ export default function TemplateVivid({ data }) {
                 {discoverText} <ChevronDown size={14} className="group-hover:translate-y-0.5 transition-transform" />
               </button>
               {vipService?.enabled && (
-                <button onClick={() => setShowVIP(true)}
+                <button onClick={() => navigate(`/r/${slug}/vip`)}
                         className="flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-black text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                         style={{ backgroundColor: clr, boxShadow: `0 8px 24px rgba(${rgb},0.45)` }}>
                   <Crown size={14} /> {vipCtaText}
@@ -287,7 +286,7 @@ export default function TemplateVivid({ data }) {
               </div>
               {slogan && <p className="text-sm text-white/70">{slogan}</p>}
               {vipService?.enabled && (
-                <button onClick={() => setShowVIP(true)}
+                <button onClick={() => navigate(`/r/${slug}/vip`)}
                         className="mt-4 flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                   <Crown size={11} /> Book VIP Table
                 </button>
@@ -347,9 +346,6 @@ export default function TemplateVivid({ data }) {
         </div>
       </footer>
 
-      {showVIP && (
-        <VIPBookingModal slug={slug} restaurantName={name} primaryColor={clr} onClose={() => setShowVIP(false)} />
-      )}
     </div>
   );
 }
