@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {
@@ -503,6 +504,7 @@ function ThemeCard({ tpl, active, onCustomize, liveUrl }) {
 
 // ─── Main Themes page ───────────────────────────────────────
 export default function Themes() {
+  const navigate = useNavigate();
   const qc = useQueryClient();
 
   const { data: rd, isLoading } = useQuery({
@@ -544,7 +546,7 @@ export default function Themes() {
   const activeTplId  = restaurant?.template?.id ?? 'classic';
   const activeTpl    = TEMPLATES.find(t => t.id === activeTplId);
 
-  const openCustomize = (id) => { setSelTpl(id); setConfig(p => ({ ...p, id })); setMode('customize'); };
+  const openCustomize = (id) => navigate('/admin/themes/customize', { state: { themeId: id } });
 
   const handleHeroUpload = async (file) => {
     if (!file) return;
