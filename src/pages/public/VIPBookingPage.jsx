@@ -10,10 +10,6 @@ import {
 import api from '../../services/api';
 
 // ── Geometry constants ── identical to builder ─────────────────
-const ROUND_R   = 28;
-const RECT_W    = 82;
-const RECT_H    = 50;
-const SQ_HALF   = 30;
 const CHAIR_R   = 7;
 const CHAIR_GAP = 6;
 const WALL_T    = 14;
@@ -22,24 +18,36 @@ const PAD       = 60;
 const LUNCH  = ['12:00','12:30','13:00','13:30','14:00','14:30'];
 const DINNER = ['19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30'];
 
-function tblHalf(s) {
-  if (s === 'round')     return { hw: ROUND_R,    hh: ROUND_R };
-  if (s === 'rectangle') return { hw: RECT_W / 2, hh: RECT_H / 2 };
-  return { hw: SQ_HALF, hh: SQ_HALF };
+function tblHalf(shape, cap = 4) {
+  if (shape === 'round') {
+    if (cap <= 2) return { hw: 20, hh: 20 };
+    if (cap <= 4) return { hw: 28, hh: 28 };
+    if (cap <= 6) return { hw: 34, hh: 34 };
+    return { hw: 40, hh: 40 };
+  }
+  if (shape === 'rectangle' || shape === 'banquet') {
+    if (cap <= 4)  return { hw: 41, hh: 26 };
+    if (cap <= 6)  return { hw: 55, hh: 28 };
+    if (cap <= 8)  return { hw: 68, hh: 30 };
+    return { hw: 100, hh: 30 };
+  }
+  // square
+  if (cap <= 2) return { hw: 22, hh: 22 };
+  return { hw: 30, hh: 30 };
 }
 
 function chairs(cx, cy, shape, cap) {
   cap = Math.min(cap, 12);
   if (cap <= 0) return [];
   const out = [];
+  const { hw, hh } = tblHalf(shape, cap);
   if (shape === 'round') {
-    const r = ROUND_R + CHAIR_GAP + CHAIR_R;
+    const r = hw + CHAIR_GAP + CHAIR_R;
     for (let i = 0; i < cap; i++) {
       const a = (2 * Math.PI * i / cap) - Math.PI / 2;
       out.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
     }
   } else {
-    const { hw, hh } = tblHalf(shape);
     const off  = CHAIR_GAP + CHAIR_R;
     const tCap = Math.max(1, Math.round(cap * hw / (hw + hh)));
     const sCap = Math.floor((cap - tCap * 2) / 2);
@@ -269,7 +277,7 @@ function FloorPlan({ floor, tables, bookedIds, selectedId, primaryColor, onSelec
         const booked = bookedIds.includes(t._id);
         const sel    = selectedId === t._id;
         const hover  = hov === t._id && !sel;
-        const { hw, hh } = tblHalf(t.shape);
+        const { hw, hh } = tblHalf(t.shape, t.capacity);
         const ch     = chairs(tx, ty, t.shape, t.capacity);
         const filt   = sel ? 'url(#vp-sel)' : hover ? 'url(#vp-hov)' : undefined;
         const fill   = booked ? '#bbb4aa' : sel ? primaryColor : `url(#vt-${t._id})`;
@@ -293,8 +301,8 @@ function FloorPlan({ floor, tables, bookedIds, selectedId, primaryColor, onSelec
             ))}
             {t.shape === 'round' ? (
               <g filter={filt}>
-                <circle cx={tx} cy={ty} r={ROUND_R} fill={fill} stroke={stroke} strokeWidth={sw}/>
-                <circle cx={tx} cy={ty} r={ROUND_R*.58}
+                <circle cx={tx} cy={ty} r={hw} fill={fill} stroke={stroke} strokeWidth={sw}/>
+                <circle cx={tx} cy={ty} r={hw*.58}
                   fill={sel ? 'rgba(255,255,255,.24)' : 'rgba(255,246,224,.3)'}
                   style={{ pointerEvents:'none' }}/>
               </g>
