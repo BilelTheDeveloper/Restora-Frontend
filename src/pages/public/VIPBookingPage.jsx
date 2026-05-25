@@ -428,7 +428,8 @@ export default function VIPBookingPage() {
     onError: err => toast.error(err.response?.data?.message || 'Booking failed — please try again.'),
   });
 
-  const canSubmit = form.date && form.time && form.partySize && form.customerName && form.customerPhone;
+  const overCapacity = selectedTable && Number(form.partySize) > selectedTable.capacity;
+  const canSubmit = form.date && form.time && form.partySize && form.customerName && form.customerPhone && !overCapacity;
   const name         = restData?.name ?? '';
   const primaryColor = restData?.template?.primaryColor ?? '#f97316';
   const city         = restData?.address?.city ?? '';
@@ -666,8 +667,19 @@ export default function VIPBookingPage() {
               <div className="flex items-center gap-3">
                 <SB onClick={() => setF('partySize', Math.max(1, form.partySize - 1))}>−</SB>
                 <span className="flex-1 text-center text-lg font-black text-gray-900">{form.partySize}</span>
-                <SB onClick={() => setF('partySize', Math.min(selectedTable?.capacity ?? 20, form.partySize + 1))}>+</SB>
+                <SB onClick={() => setF('partySize', form.partySize + 1)}>+</SB>
               </div>
+              {selectedTable && (
+                overCapacity ? (
+                  <p className="text-xs text-red-600 font-semibold mt-2 flex items-center gap-1">
+                    ⚠ Table {selectedTable.number} only seats {selectedTable.capacity}. Please select a larger table or reduce guests.
+                  </p>
+                ) : (
+                  <p className="text-[10px] mt-1.5" style={{ color: 'rgba(130,85,20,.45)' }}>
+                    Table {selectedTable.number} capacity: {selectedTable.capacity} seats
+                  </p>
+                )
+              )}
             </FField>
 
             <div className="h-px" style={{ background: 'rgba(210,185,120,.2)' }}/>
@@ -692,11 +704,14 @@ export default function VIPBookingPage() {
           {/* Sticky submit footer */}
           <div className="shrink-0 px-6 pb-6 pt-4 border-t" style={{ borderColor: 'rgba(210,185,120,.18)' }}>
             {!canSubmit && (
-              <p className="text-[10px] text-amber-700/50 text-center mb-3 font-medium">
-                {!selectedId              ? '① Select a table from the floor plan' :
-                 !form.date              ? '② Choose a date' :
-                 !form.time              ? '③ Pick a time slot' :
-                 !form.customerName || !form.customerPhone ? '④ Enter your contact details' : ''}
+              <p className={`text-[10px] text-center mb-3 font-medium ${overCapacity ? 'text-red-600/70' : 'text-amber-700/50'}`}>
+                {overCapacity
+                  ? `⚠ Party of ${form.partySize} exceeds table capacity (${selectedTable?.capacity} seats)`
+                  : !selectedId              ? '① Select a table from the floor plan'
+                  : !form.date              ? '② Choose a date'
+                  : !form.time              ? '③ Pick a time slot'
+                  : !form.customerName || !form.customerPhone ? '④ Enter your contact details'
+                  : ''}
               </p>
             )}
             <button onClick={() => canSubmit && book()} disabled={!canSubmit || booking}

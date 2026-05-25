@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
 import {
   Bell, AlertTriangle, Info, Zap, CheckCheck, X, Loader2, RefreshCw,
+  CalendarDays, CheckCircle2, XCircle, ChevronRight,
 } from 'lucide-react';
 import { alertService } from '../../services/alertService';
 
@@ -12,36 +14,60 @@ const SEVERITY_CONFIG = {
   critical: { icon: Zap,           color: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20'    },
 };
 
+// Override icon for reservation types
+const TYPE_ICON_OVERRIDE = {
+  reservation_new:       CalendarDays,
+  reservation_confirmed: CheckCircle2,
+  reservation_cancelled: XCircle,
+};
+
 const TYPE_LABELS = {
-  low_stock:       'Low Stock',
-  slow_kitchen:    'Slow Kitchen',
-  no_show_risk:    'No-Show Risk',
-  revenue_anomaly: 'Revenue Alert',
-  peak_hour:       'Peak Hour',
-  vip_inactive:    'VIP Inactive',
+  low_stock:             'Low Stock',
+  slow_kitchen:          'Slow Kitchen',
+  no_show_risk:          'No-Show Risk',
+  revenue_anomaly:       'Revenue Alert',
+  peak_hour:             'Peak Hour',
+  vip_inactive:          'VIP Inactive',
+  reservation_new:       'New Booking',
+  reservation_confirmed: 'Confirmed',
+  reservation_cancelled: 'Cancelled',
+};
+
+const TYPE_COLOR_OVERRIDE = {
+  reservation_new:       { color: 'text-orange-500', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+  reservation_confirmed: { color: 'text-emerald-500', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+  reservation_cancelled: { color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' },
 };
 
 const FILTER_OPTIONS = [
-  { key: 'all',      label: 'All' },
-  { key: 'unread',   label: 'Unread' },
-  { key: 'critical', label: 'Critical' },
-  { key: 'warning',  label: 'Warnings' },
+  { key: 'all',           label: 'All' },
+  { key: 'unread',        label: 'Unread' },
+  { key: 'reservations',  label: 'Reservations' },
+  { key: 'critical',      label: 'Critical' },
+  { key: 'warning',       label: 'Warnings' },
 ];
 
 export default function Alerts() {
   const qc = useQueryClient();
   const [filter, setFilter] = useState('all');
 
+  const isReservationFilter = filter === 'reservations';
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['alerts', filter],
     queryFn: () => alertService.list({
-      unread: filter === 'unread' ? true : undefined,
+      unread:   filter === 'unread' ? true : undefined,
       severity: ['critical', 'warning'].includes(filter) ? filter : undefined,
-      limit: 50,
+      limit:    50,
     }).then(r => r.data),
   });
 
-  const alerts = data?.alerts || data || [];
+  const allAlerts = data?.alerts || data || [];
+  const RESERVATION_TYPES = ['reservation_new', 'reservation_confirmed', 'reservation_cancelled'];
+
+  const alerts = isReservationFilter
+    ? allAlerts.filter(a => RESERVATION_TYPES.includes(a.type))
+    : allAlerts;
 
   const { mutate: markRead } = useMutation({
     mutationFn: (id) => alertService.markRead(id),
@@ -112,8 +138,12 @@ export default function Alerts() {
         <div className="space-y-2">
           <AnimatePresence>
             {alerts.map(alert => {
-              const cfg = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.info;
-              const Icon = cfg.icon;
+              const baseCfg  = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.info;
+              const override = TYPE_COLOR_OVERRIDE[alert.type];
+              const cfg      = override ? { ...baseCfg, ...override } : baseCfg;
+              const Icon     = TYPE_ICON_OVERRIDE[alert.type] || cfg.icon;
+              const isResv   = RESERVATION_TYPES.includes(alert.type);
+
               return (
                 <motion.div
                   key={alert._id}
@@ -121,14 +151,14 @@ export default function Alerts() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, height: 0 }}
-                  className={`flex items-start gap-4 bg-white dark:bg-[#111111] border ${cfg.border} rounded-2xl p-4 ${!alert.isRead ? 'border-l-2' : ''}`}
+                  className={`flex items-start gap-4 bg-white dark:bg-[#111111] border ${cfg.border} rounded-2xl p-4 ${!alert.isRead ? 'ring-1 ring-inset ring-orange-400/20' : ''}`}
                 >
                   <div className={`w-9 h-9 rounded-xl ${cfg.bg} flex items-center justify-center shrink-0 mt-0.5`}>
                     <Icon size={15} className={cfg.color} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
+                    <div className="flex items-start gap-2">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <p className="text-sm font-bold text-gray-900 dark:text-white">{alert.title}</p>
                           {!alert.isRead && <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0" />}
@@ -141,14 +171,23 @@ export default function Alerts() {
                         <p className="text-xs text-gray-500 dark:text-white/50 mt-1 leading-relaxed">{alert.message}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className="flex items-center gap-3 mt-2 flex-wrap">
                       <p className="text-[10px] text-gray-300 dark:text-white/25">
                         {new Date(alert.createdAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                       </p>
-                      <div className="flex items-center gap-1.5 ml-auto">
+                      <div className="flex items-center gap-1.5 ml-auto flex-wrap">
+                        {isResv && alert.actionLink && (
+                          <NavLink
+                            to={alert.actionLink}
+                            onClick={() => !alert.isRead && markRead(alert._id)}
+                            className="flex items-center gap-1 text-[10px] text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors font-semibold"
+                          >
+                            View reservations <ChevronRight size={10} />
+                          </NavLink>
+                        )}
                         {!alert.isRead && (
                           <button onClick={() => markRead(alert._id)}
-                            className="text-[10px] text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors font-semibold">
+                            className="text-[10px] text-gray-400 dark:text-white/30 hover:text-orange-500 dark:hover:text-orange-400 transition-colors font-semibold">
                             Mark read
                           </button>
                         )}

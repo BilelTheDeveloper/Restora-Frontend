@@ -313,6 +313,12 @@ export default function AdminLayout() {
     'order:new':           () => { qc.invalidateQueries(['kitchen-orders']); qc.invalidateQueries(['orders']); qc.invalidateQueries(['dashboard-stats']); },
     'order:status_changed':() => { qc.invalidateQueries(['kitchen-orders']); qc.invalidateQueries(['orders']); },
     'table:status_changed':() =>   qc.invalidateQueries(['owner-tables']),
+    'reservation:new':     () => {
+      qc.invalidateQueries(['reservations']);
+      qc.invalidateQueries(['alerts']);
+      qc.invalidateQueries(['alert-count']);
+    },
+    'reservation:updated': () => { qc.invalidateQueries(['reservations']); },
   });
 
   const { data: alertCount = 0 } = useQuery({
