@@ -32,6 +32,14 @@ import RestaurantSetup from './pages/admin/RestaurantSetup';
 import Themes         from './pages/admin/Themes';
 import ThemeCustomize from './pages/admin/ThemeCustomize';
 import VIPSetup       from './pages/admin/VIPSetup';
+import Analytics      from './pages/admin/Analytics';
+import Revenue        from './pages/admin/Revenue';
+import Copilot        from './pages/admin/Copilot';
+import CRM            from './pages/admin/CRM';
+import Inventory      from './pages/admin/Inventory';
+import QRManager      from './pages/admin/QRManager';
+import Alerts         from './pages/admin/Alerts';
+import QRMenu         from './pages/public/QRMenu';
 
 // Super-admin (platform) layout & pages
 import SuperAdminLayout from './components/layout/SuperAdminLayout';
@@ -126,6 +134,9 @@ export default function App() {
           <Route path="/r/:slug"     element={<RestaurantPage />} />
           <Route path="/r/:slug/vip" element={<VIPBookingPage />} />
 
+          {/* QR ordering — public, mobile-first */}
+          <Route path="/qr/:slug/:tableId" element={<QRMenu />} />
+
           {/* Auth */}
           <Route path="/login"    element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -171,6 +182,13 @@ export default function App() {
             <Route path="themes"              element={<Themes />} />
             <Route path="themes/customize"   element={<ThemeCustomize />} />
             <Route path="vip-setup"          element={<VIPSetup />} />
+            <Route path="analytics"          element={<Analytics />} />
+            <Route path="revenue"            element={<Revenue />} />
+            <Route path="copilot"            element={<Copilot />} />
+            <Route path="crm"               element={<CRM />} />
+            <Route path="inventory"          element={<Inventory />} />
+            <Route path="qr-manager"         element={<QRManager />} />
+            <Route path="alerts"             element={<Alerts />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
