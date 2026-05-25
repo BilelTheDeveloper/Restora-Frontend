@@ -3,21 +3,20 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast, { Toaster } from 'react-hot-toast';
 import {
-  CalendarDays, Users, CheckCircle2, XCircle, Clock, Phone, Mail,
-  RefreshCw, Crown, Filter, Bell, ChevronRight, AlertTriangle,
-  Table2, Loader2, Check, X, Star,
+  CalendarDays, Users, CheckCircle2, XCircle, Clock, Phone,
+  RefreshCw, Crown, Filter, Bell, Loader2, Check, X, AlertTriangle,
 } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../hooks/useSocket';
 import { useAuthStore } from '../../store/authStore';
 
 const STATUS_MAP = {
-  pending:   { label: 'Pending',   dot: 'bg-amber-500',   pill: 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400',   icon: Clock       },
-  confirmed: { label: 'Confirmed', dot: 'bg-emerald-500', pill: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400', icon: CheckCircle2 },
-  seated:    { label: 'Seated',    dot: 'bg-blue-500',    pill: 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400',         icon: Users        },
+  pending:   { label: 'Pending',   dot: 'bg-amber-500',   pill: 'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',    icon: Clock        },
+  confirmed: { label: 'Confirmed', dot: 'bg-emerald-500', pill: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300', icon: CheckCircle2 },
+  seated:    { label: 'Seated',    dot: 'bg-blue-500',    pill: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',         icon: Users        },
   completed: { label: 'Completed', dot: 'bg-gray-400',    pill: 'bg-gray-50 text-gray-600 dark:bg-white/5 dark:text-gray-400',             icon: CheckCircle2 },
-  cancelled: { label: 'Cancelled', dot: 'bg-red-400',     pill: 'bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400',             icon: XCircle      },
-  'no-show': { label: 'No Show',   dot: 'bg-gray-600',    pill: 'bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-500',            icon: XCircle      },
+  cancelled: { label: 'Cancelled', dot: 'bg-red-400',     pill: 'bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-400',             icon: XCircle      },
+  'no-show': { label: 'No Show',   dot: 'bg-gray-500',    pill: 'bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-500',            icon: XCircle      },
 };
 
 const STATUS_FILTERS = ['all', 'pending', 'confirmed', 'seated', 'completed', 'cancelled'];
@@ -25,19 +24,6 @@ const STATUS_FILTERS = ['all', 'pending', 'confirmed', 'seated', 'completed', 'c
 function fmtDate(d) {
   if (!d) return '—';
   return new Date(d).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-}
-function fmtDateShort(d) {
-  if (!d) return '—';
-  return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-}
-
-// Party size vs table capacity risk
-function partySizeRisk(partySize, tableCapacity) {
-  if (!tableCapacity) return null;
-  if (partySize === tableCapacity) return 'exact';
-  if (partySize > tableCapacity) return 'over';   // shouldn't happen after backend validation
-  if (tableCapacity - partySize >= 3) return 'under'; // big waste
-  return 'ok';
 }
 
 function StatusPill({ status }) {
@@ -66,165 +52,132 @@ function StatCard({ label, value, icon: Icon, color, bg, highlight }) {
   );
 }
 
-// ── Pending approval banner ──────────────────────────────────────
-function PendingBanner({ pending, onConfirm, onDecline, isUpdating }) {
-  if (!pending.length) return null;
+// ── Pending approvals quick-action banner ────────────────────────
+function PendingBanner({ count }) {
+  if (!count) return null;
   return (
     <motion.div
-      initial={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-amber-50 dark:bg-amber-500/8 border border-amber-200 dark:border-amber-500/25 rounded-2xl overflow-hidden"
+      exit={{ opacity: 0, y: -6 }}
+      className="flex items-center gap-3 px-4 py-3 bg-amber-50 dark:bg-amber-500/8 border border-amber-200 dark:border-amber-500/25 rounded-2xl"
     >
-      <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-amber-100 dark:border-amber-500/15">
-        <div className="w-7 h-7 rounded-xl bg-amber-100 dark:bg-amber-500/15 flex items-center justify-center">
-          <Bell size={13} className="text-amber-600 dark:text-amber-400" />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-black text-amber-800 dark:text-amber-300">
-            {pending.length} reservation{pending.length > 1 ? 's' : ''} awaiting confirmation
-          </p>
-          <p className="text-[11px] text-amber-600/70 dark:text-amber-400/60 mt-0.5">
-            Review and confirm or decline each request
-          </p>
-        </div>
+      <div className="w-7 h-7 rounded-xl bg-amber-100 dark:bg-amber-500/15 flex items-center justify-center shrink-0">
+        <Bell size={13} className="text-amber-600 dark:text-amber-400" />
       </div>
-      <div className="divide-y divide-amber-100 dark:divide-amber-500/10">
-        {pending.map(r => (
-          <PendingRow key={r._id} r={r} onConfirm={onConfirm} onDecline={onDecline} isUpdating={isUpdating} />
-        ))}
+      <div className="flex-1">
+        <p className="text-sm font-black text-amber-800 dark:text-amber-300">
+          {count} reservation{count > 1 ? 's' : ''} awaiting your confirmation
+        </p>
+        <p className="text-[11px] text-amber-600/60 dark:text-amber-400/50 mt-0.5">
+          Scroll down — use Confirm or Decline on each pending booking
+        </p>
       </div>
     </motion.div>
   );
 }
 
-function PendingRow({ r, onConfirm, onDecline, isUpdating }) {
+// ── Single reservation row ───────────────────────────────────────
+function ReservationRow({ r, onUpdate, isUpdating, flash }) {
   const busy = isUpdating === r._id;
-  const risk = partySizeRisk(r.partySize, r.table?.capacity);
+  const isPending = r.status === 'pending';
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4">
+    <motion.div
+      layout
+      animate={flash ? { backgroundColor: ['rgba(251,191,36,0.15)', 'rgba(0,0,0,0)'] } : {}}
+      transition={{ duration: 2.5 }}
+      className={`flex flex-col sm:flex-row sm:items-start gap-3 p-4 transition-colors ${
+        isPending
+          ? 'bg-amber-50/60 dark:bg-amber-500/5 hover:bg-amber-50 dark:hover:bg-amber-500/8'
+          : 'hover:bg-gray-50 dark:hover:bg-white/2'
+      }`}
+    >
+      {/* Pending stripe indicator */}
+      {isPending && (
+        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-amber-400 dark:bg-amber-500 rounded-l-xl" />
+      )}
+
       {/* Avatar */}
-      <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-500/15 flex items-center justify-center shrink-0">
-        <span className="text-sm font-black text-amber-700 dark:text-amber-400">{r.customerName?.[0]?.toUpperCase()}</span>
+      <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
+        isPending ? 'bg-amber-100 dark:bg-amber-500/15' : 'bg-orange-50 dark:bg-orange-500/10'
+      }`}>
+        <span className={`text-sm font-black ${isPending ? 'text-amber-700 dark:text-amber-400' : 'text-orange-500'}`}>
+          {r.customerName?.[0]?.toUpperCase()}
+        </span>
       </div>
 
-      {/* Info */}
-      <div className="flex-1 min-w-0">
+      {/* Guest info */}
+      <div className="flex-1 min-w-0 space-y-1">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-sm font-bold text-gray-900 dark:text-white">{r.customerName}</p>
+          <StatusPill status={r.status} />
           {r.table && (
             <span className="flex items-center gap-1 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 px-1.5 py-0.5 rounded-lg">
               <Crown size={8} /> Table {r.table.number}
-              {r.table.capacity && (
-                <span className="opacity-60">· {r.table.capacity} seats</span>
-              )}
-            </span>
-          )}
-          {risk === 'over' && (
-            <span className="flex items-center gap-1 text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 px-1.5 py-0.5 rounded-lg">
-              <AlertTriangle size={8} /> Overbooked
+              {r.table.capacity && <span className="opacity-60"> · {r.table.capacity} seats</span>}
             </span>
           )}
         </div>
-        <div className="flex items-center gap-3 mt-0.5 text-xs text-gray-500 dark:text-white/40 flex-wrap">
-          <span className="flex items-center gap-1"><Users size={10} /> {r.partySize} guests</span>
-          <span className="flex items-center gap-1"><CalendarDays size={10} /> {fmtDate(r.date)}</span>
+
+        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-white/40 flex-wrap">
+          <span className="flex items-center gap-1 font-semibold text-gray-700 dark:text-gray-300">
+            <CalendarDays size={11} className="text-orange-400" /> {fmtDate(r.date)}
+          </span>
           <span className="flex items-center gap-1"><Clock size={10} /> {r.time}</span>
-          {r.customerPhone && (
-            <a href={`tel:${r.customerPhone}`} className="flex items-center gap-1 hover:text-orange-500 transition-colors">
-              <Phone size={10} /> {r.customerPhone}
-            </a>
-          )}
+          <span className="flex items-center gap-1"><Users size={10} /> {r.partySize} guests</span>
+          <a href={`tel:${r.customerPhone}`} className="flex items-center gap-1 hover:text-orange-500 transition-colors">
+            <Phone size={10} /> {r.customerPhone}
+          </a>
         </div>
+
         {r.notes && (
-          <p className="text-[11px] text-gray-400 dark:text-white/30 italic mt-1">"{r.notes}"</p>
+          <p className="text-[11px] text-gray-400 dark:text-white/30 italic">"{r.notes}"</p>
         )}
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2 shrink-0">
-        <button
-          onClick={() => onDecline(r._id)}
-          disabled={busy}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/50 hover:border-red-300 dark:hover:border-red-500/40 hover:text-red-600 dark:hover:text-red-400 transition-all disabled:opacity-40"
-        >
-          <X size={12} /> Decline
-        </button>
-        <button
-          onClick={() => onConfirm(r._id)}
-          disabled={busy}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black bg-emerald-500 hover:bg-emerald-600 text-white transition-all disabled:opacity-40 shadow-sm shadow-emerald-500/30"
-        >
-          {busy ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />}
-          Confirm
-        </button>
-      </div>
-    </div>
-  );
-}
+      <div className="flex items-center gap-2 shrink-0 mt-1">
+        {busy && <Loader2 size={13} className="animate-spin text-orange-400" />}
 
-// ── Main reservation row ─────────────────────────────────────────
-function ReservationRow({ r, onUpdate, isUpdating }) {
-  const busy = isUpdating === r._id;
-  const s    = STATUS_MAP[r.status] ?? STATUS_MAP.pending;
-  const risk = partySizeRisk(r.partySize, r.table?.capacity);
-
-  return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 hover:bg-gray-50 dark:hover:bg-white/2 transition-colors">
-      {/* Guest */}
-      <div className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="w-9 h-9 rounded-xl bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center shrink-0">
-          <span className="text-sm font-black text-orange-500">{r.customerName?.[0]?.toUpperCase()}</span>
-        </div>
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{r.customerName}</p>
-            {r.table && (
-              <span className="flex items-center gap-1 text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 px-1.5 py-0.5 rounded-lg shrink-0">
-                <Crown size={8} /> T-{r.table.number}
-                {r.table.capacity && <span className="opacity-60">·{r.table.capacity}p</span>}
-              </span>
-            )}
-            {risk === 'over' && (
-              <span className="text-[9px] font-bold text-red-500 dark:text-red-400">⚠ Over capacity</span>
-            )}
-          </div>
-          <div className="flex items-center gap-2.5 mt-0.5 text-xs text-gray-400 dark:text-white/40 flex-wrap">
-            <a href={`tel:${r.customerPhone}`} className="flex items-center gap-1 hover:text-orange-500 transition-colors">
-              <Phone size={9} /> {r.customerPhone}
-            </a>
-            {r.notes && <span className="italic truncate max-w-[160px]">"{r.notes}"</span>}
-          </div>
-        </div>
-      </div>
-
-      {/* Date / time / guests */}
-      <div className="flex items-center gap-3 text-xs shrink-0 flex-wrap">
-        <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300 font-semibold">
-          <CalendarDays size={12} className="text-orange-400" />
-          {fmtDate(r.date)}
-        </div>
-        <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-          <Clock size={11} /> {r.time}
-        </div>
-        <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-          <Users size={11} /> {r.partySize}
-        </div>
-      </div>
-
-      {/* Status + actions */}
-      <div className="flex items-center gap-2 shrink-0">
-        <StatusPill status={r.status} />
+        {isPending && (
+          <>
+            <button
+              onClick={() => onUpdate(r._id, 'cancelled')}
+              disabled={busy}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white/50 hover:border-red-300 dark:hover:border-red-500/40 hover:text-red-600 dark:hover:text-red-400 transition-all disabled:opacity-40"
+            >
+              <X size={11} /> Decline
+            </button>
+            <button
+              onClick={() => onUpdate(r._id, 'confirmed')}
+              disabled={busy}
+              className="flex items-center gap-1 px-4 py-1.5 rounded-xl text-xs font-black bg-emerald-500 hover:bg-emerald-600 text-white transition-all disabled:opacity-40 shadow-sm shadow-emerald-500/25"
+            >
+              <Check size={11} /> Confirm
+            </button>
+          </>
+        )}
 
         {r.status === 'confirmed' && (
-          <button
-            onClick={() => onUpdate(r._id, 'seated')}
-            disabled={busy}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors disabled:opacity-40"
-          >
-            Seat
-          </button>
+          <>
+            <button
+              onClick={() => onUpdate(r._id, 'seated')}
+              disabled={busy}
+              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors disabled:opacity-40"
+            >
+              Seat
+            </button>
+            <button
+              onClick={() => onUpdate(r._id, 'no-show')}
+              disabled={busy}
+              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-gray-50 dark:bg-white/5 text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 dark:hover:text-red-400 transition-colors disabled:opacity-40"
+            >
+              No Show
+            </button>
+          </>
         )}
+
         {r.status === 'seated' && (
           <button
             onClick={() => onUpdate(r._id, 'completed')}
@@ -234,55 +187,50 @@ function ReservationRow({ r, onUpdate, isUpdating }) {
             Complete
           </button>
         )}
-        {['confirmed', 'seated'].includes(r.status) && (
-          <button
-            onClick={() => onUpdate(r._id, 'no-show')}
-            disabled={busy}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-gray-50 dark:bg-white/5 text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 dark:hover:text-red-400 transition-colors disabled:opacity-40"
-          >
-            No Show
-          </button>
-        )}
-        {busy && <Loader2 size={13} className="animate-spin text-orange-400" />}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 // ── Page ─────────────────────────────────────────────────────────
 export default function Reservations() {
-  const qc                           = useQueryClient();
-  const { user }                     = useAuthStore();
+  const qc                              = useQueryClient();
+  const { user }                        = useAuthStore();
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter,   setDateFilter]   = useState('');
   const [updatingId,   setUpdatingId]   = useState(null);
-  const [flashId,      setFlashId]      = useState(null);
+  const [flashIds,     setFlashIds]     = useState(new Set());
 
-  // Live socket subscription
+  // ── Live socket ──────────────────────────────────────────────
   useSocket(user?.restaurant, {
     'reservation:new': ({ reservation }) => {
-      qc.invalidateQueries(['reservations']);
-      setFlashId(reservation?._id);
+      qc.invalidateQueries({ queryKey: ['reservations'] });
+      if (reservation?._id) {
+        setFlashIds(prev => new Set([...prev, reservation._id]));
+        setTimeout(() => setFlashIds(prev => { const n = new Set(prev); n.delete(reservation._id); return n; }), 4000);
+      }
       toast.success(
-        `New reservation — ${reservation?.customerName} · ${reservation?.partySize} guests`,
+        `New booking — ${reservation?.customerName} · ${reservation?.partySize} guests`,
         { icon: '🔔', duration: 5000 }
       );
     },
-    'reservation:updated': () => qc.invalidateQueries(['reservations']),
+    'reservation:updated': () => qc.invalidateQueries({ queryKey: ['reservations'] }),
   });
 
+  // ── Data ─────────────────────────────────────────────────────
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['reservations', statusFilter, dateFilter],
     queryFn: () => api.get('/owner/reservations', {
       params: {
         status: statusFilter !== 'all' ? statusFilter : undefined,
         date:   dateFilter || undefined,
-      }
+      },
     }).then(r => r.data.data ?? []),
   });
 
   const reservations = data ?? [];
 
+  // ── Mutations ────────────────────────────────────────────────
   const { mutate: updateStatus } = useMutation({
     mutationFn: ({ id, status }) => api.patch(`/owner/reservations/${id}/status`, { status }),
     onMutate:  ({ id }) => setUpdatingId(id),
@@ -291,34 +239,39 @@ export default function Reservations() {
       qc.invalidateQueries({ queryKey: ['reservations'] });
       qc.invalidateQueries({ queryKey: ['alerts'] });
       qc.invalidateQueries({ queryKey: ['alert-count'] });
-      const msgs = { confirmed: '✅ Reservation confirmed', cancelled: '❌ Reservation declined', seated: '🪑 Guest seated', completed: '🏁 Marked complete', 'no-show': '👻 Marked no-show' };
+      const msgs = {
+        confirmed: '✅ Reservation confirmed',
+        cancelled: '❌ Reservation declined',
+        seated:    '🪑 Guest seated',
+        completed: '🏁 Marked complete',
+        'no-show': '👻 Marked no-show',
+      };
       toast.success(msgs[status] ?? 'Updated');
     },
     onError: () => { toast.error('Update failed'); setUpdatingId(null); },
   });
 
-  const handleConfirm = (id) => updateStatus({ id, status: 'confirmed' });
-  const handleDecline = (id) => updateStatus({ id, status: 'cancelled' });
-  const handleUpdate  = (id, status) => updateStatus({ id, status });
+  const handleUpdate = (id, status) => updateStatus({ id, status });
 
-  // Clear flash after 4 seconds
-  useEffect(() => {
-    if (!flashId) return;
-    const t = setTimeout(() => setFlashId(null), 4000);
-    return () => clearTimeout(t);
-  }, [flashId]);
+  const today       = new Date().toISOString().split('T')[0];
+  const pendingList = reservations.filter(r => r.status === 'pending');
 
-  const today     = new Date().toISOString().split('T')[0];
-  const pending   = reservations.filter(r => r.status === 'pending');
-  const rest      = reservations.filter(r => r.status !== 'pending' || statusFilter !== 'all');
-  const displayList = statusFilter === 'all' ? reservations.filter(r => r.status !== 'pending') : reservations;
+  const statCounts = {
+    pending:   reservations.filter(r => r.status === 'pending').length,
+    confirmed: reservations.filter(r => r.status === 'confirmed').length,
+    covers:    reservations.filter(r => ['confirmed','seated'].includes(r.status)).reduce((s, r) => s + r.partySize, 0),
+  };
 
-  const statPending   = reservations.filter(r => r.status === 'pending').length;
-  const statConfirmed = reservations.filter(r => r.status === 'confirmed').length;
-  const statCovers    = reservations.filter(r => ['confirmed','seated'].includes(r.status)).reduce((a, r) => a + r.partySize, 0);
+  // Sort: pending first, then by date+time
+  const sorted = [...reservations].sort((a, b) => {
+    const pa = a.status === 'pending' ? 0 : 1;
+    const pb = b.status === 'pending' ? 0 : 1;
+    if (pa !== pb) return pa - pb;
+    return new Date(a.date) - new Date(b.date) || a.time.localeCompare(b.time);
+  });
 
   return (
-    <div className="p-5 sm:p-6 space-y-5 max-w-6xl bg-gray-50 dark:bg-[#0a0a0a] min-h-full">
+    <div className="p-5 sm:p-6 space-y-5 max-w-6xl bg-gray-50 dark:bg-[#0a0a0a] min-h-full relative">
       <Toaster position="top-right" toastOptions={{ style: { fontSize: 13 } }} />
 
       {/* Header */}
@@ -338,20 +291,15 @@ export default function Reservations() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard label="Total"     value={reservations.length} icon={CalendarDays} color="text-orange-500"  bg="bg-orange-50 dark:bg-orange-500/10" />
-        <StatCard label="Pending"   value={statPending}         icon={Bell}         color="text-amber-500"   bg="bg-amber-50 dark:bg-amber-500/10"   highlight={statPending > 0} />
-        <StatCard label="Confirmed" value={statConfirmed}       icon={CheckCircle2} color="text-emerald-500" bg="bg-emerald-50 dark:bg-emerald-500/10" />
-        <StatCard label="Covers"    value={statCovers}          icon={Users}        color="text-purple-500"  bg="bg-purple-50 dark:bg-purple-500/10"  />
+        <StatCard label="Pending"   value={statCounts.pending}  icon={Bell}         color="text-amber-500"   bg="bg-amber-50 dark:bg-amber-500/10"   highlight={statCounts.pending > 0} />
+        <StatCard label="Confirmed" value={statCounts.confirmed} icon={CheckCircle2} color="text-emerald-500" bg="bg-emerald-50 dark:bg-emerald-500/10" />
+        <StatCard label="Covers"    value={statCounts.covers}   icon={Users}        color="text-purple-500"  bg="bg-purple-50 dark:bg-purple-500/10"  />
       </div>
 
-      {/* Pending approvals banner — only shown in 'all' view */}
+      {/* Pending banner */}
       <AnimatePresence>
-        {statusFilter === 'all' && pending.length > 0 && (
-          <PendingBanner
-            pending={pending}
-            onConfirm={handleConfirm}
-            onDecline={handleDecline}
-            isUpdating={updatingId}
-          />
+        {pendingList.length > 0 && (
+          <PendingBanner count={pendingList.length} key="pending-banner" />
         )}
       </AnimatePresence>
 
@@ -370,9 +318,9 @@ export default function Reservations() {
               }`}
             >
               {s === 'all' ? 'All' : STATUS_MAP[s]?.label ?? s}
-              {s === 'pending' && statPending > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-white text-[9px] font-black flex items-center justify-center">
-                  {statPending > 9 ? '9+' : statPending}
+              {s === 'pending' && statCounts.pending > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-amber-500 text-white text-[9px] font-black flex items-center justify-center">
+                  {statCounts.pending > 9 ? '9+' : statCounts.pending}
                 </span>
               )}
             </button>
@@ -381,49 +329,51 @@ export default function Reservations() {
         <div className="flex-1 min-w-[140px] flex items-center gap-2">
           <CalendarDays size={13} className="text-gray-400 shrink-0" />
           <input
-            type="date" value={dateFilter} onChange={e => setDateFilter(e.target.value)}
+            type="date"
+            value={dateFilter}
+            onChange={e => setDateFilter(e.target.value)}
             className="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-3 py-1.5 text-xs text-gray-700 dark:text-gray-300 outline-none focus:border-orange-400 transition-colors [color-scheme:light] dark:[color-scheme:dark]"
           />
           {dateFilter && (
             <button onClick={() => setDateFilter('')} className="text-xs text-gray-400 hover:text-red-400 transition-colors">✕</button>
           )}
         </div>
-        <button onClick={() => setDateFilter(today)}
-          className="px-3 py-1.5 rounded-xl text-xs font-bold bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
+        <button
+          onClick={() => setDateFilter(today)}
+          className="px-3 py-1.5 rounded-xl text-xs font-bold bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+        >
           Today
         </button>
       </div>
 
-      {/* Reservations list */}
-      <div className="bg-white dark:bg-[#141414] border border-gray-100 dark:border-white/6 rounded-2xl overflow-hidden">
+      {/* Reservations list — ALL statuses, pending pinned to top */}
+      <div className="bg-white dark:bg-[#141414] border border-gray-100 dark:border-white/6 rounded-2xl overflow-hidden relative">
         {isLoading ? (
           <div className="flex items-center justify-center py-20 text-gray-400 dark:text-white/30 gap-2">
-            <Loader2 size={18} className="animate-spin" /> Loading…
+            <Loader2 size={18} className="animate-spin" /> Loading reservations…
           </div>
-        ) : displayList.length === 0 ? (
+        ) : sorted.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-gray-400 dark:text-white/20">
-            <CalendarDays size={32} className="opacity-20 mb-3" />
-            <p className="text-sm font-medium">No reservations found</p>
+            <CalendarDays size={36} className="opacity-20 mb-3" />
+            <p className="text-sm font-semibold text-gray-500 dark:text-white/30">No reservations found</p>
             <p className="text-xs mt-1 text-gray-300 dark:text-white/15">
-              {statusFilter !== 'all' ? `No ${STATUS_MAP[statusFilter]?.label ?? statusFilter} reservations` : 'Bookings made via your website will appear here'}
+              {statusFilter !== 'all'
+                ? `No ${STATUS_MAP[statusFilter]?.label ?? statusFilter} reservations`
+                : 'Bookings made via your website will appear here in real time'}
             </p>
           </div>
         ) : (
-          <AnimatePresence initial={false}>
-            <div className="divide-y divide-gray-100 dark:divide-white/5">
-              {displayList.map(r => (
-                <motion.div
-                  key={r._id}
-                  layout
-                  initial={flashId === r._id ? { backgroundColor: 'rgba(251,191,36,0.15)' } : {}}
-                  animate={{ backgroundColor: 'transparent' }}
-                  transition={{ duration: 2 }}
-                >
-                  <ReservationRow r={r} onUpdate={handleUpdate} isUpdating={updatingId} />
-                </motion.div>
-              ))}
-            </div>
-          </AnimatePresence>
+          <div className="divide-y divide-gray-100 dark:divide-white/5">
+            {sorted.map(r => (
+              <ReservationRow
+                key={r._id}
+                r={r}
+                onUpdate={handleUpdate}
+                isUpdating={updatingId}
+                flash={flashIds.has(r._id)}
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>

@@ -417,6 +417,17 @@ export default function VIPBookingPage() {
     if (selectedId && bookedIds.includes(selectedId)) setSelectedId(null);
   }, [bookedIds, selectedId]);
 
+  // When table changes, snap party size into the valid range for that table
+  useEffect(() => {
+    if (!selectedTable) return;
+    const cap = selectedTable.capacity;
+    const min = cap <= 4 ? cap : cap - 2;
+    const cur = Number(form.partySize);
+    if (cur < min) setF('partySize', min);
+    if (cur > cap) setF('partySize', cap);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId]);
+
   const selectedTable = allTables.find(t => t._id === selectedId);
   const zone = selectedTable ? inZone(selectedTable, activeFloor?.zones ?? []) : null;
 
@@ -428,8 +439,14 @@ export default function VIPBookingPage() {
     onError: err => toast.error(err.response?.data?.message || 'Booking failed — please try again.'),
   });
 
+  // Min party: capacity ≤ 4 → must fill exactly; capacity > 4 → capacity - 2
+  const minParty = selectedTable
+    ? (selectedTable.capacity <= 4 ? selectedTable.capacity : selectedTable.capacity - 2)
+    : 1;
   const overCapacity = selectedTable && Number(form.partySize) > selectedTable.capacity;
-  const canSubmit = form.date && form.time && form.partySize && form.customerName && form.customerPhone && !overCapacity;
+  const underMin     = selectedTable && Number(form.partySize) < minParty;
+  const partySizeErr = overCapacity || underMin;
+  const canSubmit = form.date && form.time && form.partySize && form.customerName && form.customerPhone && !partySizeErr;
   const name         = restData?.name ?? '';
   const primaryColor = restData?.template?.primaryColor ?? '#f97316';
   const city         = restData?.address?.city ?? '';
@@ -666,17 +683,25 @@ export default function VIPBookingPage() {
             <FField label="Guests" icon={<Users size={12} style={{ color: primaryColor }}/>}>
               <div className="flex items-center gap-3">
                 <SB onClick={() => setF('partySize', Math.max(1, form.partySize - 1))}>−</SB>
-                <span className="flex-1 text-center text-lg font-black text-gray-900">{form.partySize}</span>
+                <span className={`flex-1 text-center text-lg font-black ${partySizeErr ? 'text-red-600' : 'text-gray-900'}`}>
+                  {form.partySize}
+                </span>
                 <SB onClick={() => setF('partySize', form.partySize + 1)}>+</SB>
               </div>
               {selectedTable && (
                 overCapacity ? (
-                  <p className="text-xs text-red-600 font-semibold mt-2 flex items-center gap-1">
-                    ⚠ Table {selectedTable.number} only seats {selectedTable.capacity}. Please select a larger table or reduce guests.
+                  <p className="text-xs text-red-600 font-semibold mt-2">
+                    ⚠ Table {selectedTable.number} seats max {selectedTable.capacity}. Too many guests — pick a bigger table or reduce guests.
+                  </p>
+                ) : underMin ? (
+                  <p className="text-xs text-red-600 font-semibold mt-2">
+                    ⚠ Table {selectedTable.number} requires at least {minParty} guests (min for a {selectedTable.capacity}-seat table). Choose a smaller table or add more guests.
                   </p>
                 ) : (
                   <p className="text-[10px] mt-1.5" style={{ color: 'rgba(130,85,20,.45)' }}>
-                    Table {selectedTable.number} capacity: {selectedTable.capacity} seats
+                    Table {selectedTable.number} · {minParty === selectedTable.capacity
+                      ? `${selectedTable.capacity} guests exactly`
+                      : `${minParty}–${selectedTable.capacity} guests`}
                   </p>
                 )
               )}
@@ -704,12 +729,14 @@ export default function VIPBookingPage() {
           {/* Sticky submit footer */}
           <div className="shrink-0 px-6 pb-6 pt-4 border-t" style={{ borderColor: 'rgba(210,185,120,.18)' }}>
             {!canSubmit && (
-              <p className={`text-[10px] text-center mb-3 font-medium ${overCapacity ? 'text-red-600/70' : 'text-amber-700/50'}`}>
+              <p className={`text-[10px] text-center mb-3 font-medium ${partySizeErr ? 'text-red-600/70' : 'text-amber-700/50'}`}>
                 {overCapacity
-                  ? `⚠ Party of ${form.partySize} exceeds table capacity (${selectedTable?.capacity} seats)`
-                  : !selectedId              ? '① Select a table from the floor plan'
-                  : !form.date              ? '② Choose a date'
-                  : !form.time              ? '③ Pick a time slot'
+                  ? `⚠ ${form.partySize} guests exceed table ${selectedTable?.number}'s max (${selectedTable?.capacity} seats)`
+                  : underMin
+                  ? `⚠ Table ${selectedTable?.number} needs at least ${minParty} guests`
+                  : !selectedId ? '① Select a table from the floor plan'
+                  : !form.date  ? '② Choose a date'
+                  : !form.time  ? '③ Pick a time slot'
                   : !form.customerName || !form.customerPhone ? '④ Enter your contact details'
                   : ''}
               </p>
