@@ -14,40 +14,62 @@ import {
   Utensils, Lock, ShieldCheck, Store, ShieldAlert, Palette, Crown,
   TrendingUp, Bot, QrCode, Package, DollarSign, UserCircle,
   AlertTriangle, X, CheckCheck, Info, Zap,
+  Clock, Gift, Megaphone, Star, Truck, Tag, Briefcase, Wallet,
+  BarChart3, PackagePlus, Users2, Building2,
 } from 'lucide-react';
 
 const NAV_GROUPS = [
   {
     label: 'Live Operations',
     items: [
-      { to: '/admin',              icon: LayoutDashboard, label: 'Dashboard',   end: true },
+      { to: '/admin',              icon: LayoutDashboard, label: 'Dashboard',    end: true },
       { to: '/admin/pos',          icon: ShoppingCart,    label: 'POS' },
       { to: '/admin/orders',       icon: ClipboardList,   label: 'Orders' },
       { to: '/admin/kitchen',      icon: ChefHat,         label: 'Kitchen' },
       { to: '/admin/tables',       icon: Grid3X3,         label: 'Tables' },
       { to: '/admin/reservations', icon: CalendarDays,    label: 'Reservations' },
+      { to: '/admin/waitlist',     icon: Clock,           label: 'Waitlist' },
     ],
   },
   {
     label: 'Intelligence',
     items: [
-      { to: '/admin/analytics', icon: TrendingUp, label: 'Analytics' },
-      { to: '/admin/revenue',   icon: DollarSign, label: 'Revenue Engine' },
-      { to: '/admin/copilot',   icon: Bot,        label: 'Copilot' },
+      { to: '/admin/analytics',   icon: TrendingUp, label: 'Analytics' },
+      { to: '/admin/revenue',     icon: DollarSign, label: 'Revenue Engine' },
+      { to: '/admin/forecasting', icon: BarChart3,  label: 'Forecasting' },
+      { to: '/admin/copilot',     icon: Bot,        label: 'Copilot' },
     ],
   },
   {
-    label: 'Guests & Staff',
+    label: 'Guests & Loyalty',
     items: [
-      { to: '/admin/crm',   icon: UserCircle, label: 'Guest CRM' },
-      { to: '/admin/staff', icon: Users,      label: 'Staff' },
+      { to: '/admin/crm',       icon: UserCircle, label: 'Guest CRM' },
+      { to: '/admin/loyalty',   icon: Gift,       label: 'Loyalty Engine' },
+      { to: '/admin/campaigns', icon: Megaphone,  label: 'Campaigns' },
+      { to: '/admin/reviews',   icon: Star,       label: 'Reviews' },
+    ],
+  },
+  {
+    label: 'Workforce & Finance',
+    items: [
+      { to: '/admin/staff',     icon: Users,     label: 'Staff' },
+      { to: '/admin/workforce', icon: Briefcase, label: 'Workforce & Pay' },
+      { to: '/admin/finance',   icon: Wallet,    label: 'Finance' },
+    ],
+  },
+  {
+    label: 'Supply & Pricing',
+    items: [
+      { to: '/admin/inventory', icon: Package,     label: 'Inventory' },
+      { to: '/admin/purchases', icon: PackagePlus, label: 'Purchases' },
+      { to: '/admin/delivery',  icon: Truck,       label: 'Delivery Hub' },
+      { to: '/admin/pricing',   icon: Tag,         label: 'Dynamic Pricing' },
     ],
   },
   {
     label: 'Restaurant',
     items: [
       { to: '/admin/menu',      icon: BookOpen, label: 'Menu' },
-      { to: '/admin/inventory', icon: Package,  label: 'Inventory' },
       { to: '/admin/themes',    icon: Palette,  label: 'Themes' },
       { to: '/admin/vip-setup', icon: Crown,    label: 'VIP Setup' },
     ],

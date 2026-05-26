@@ -40,6 +40,16 @@ import Inventory      from './pages/admin/Inventory';
 import QRManager      from './pages/admin/QRManager';
 import Alerts         from './pages/admin/Alerts';
 import QRMenu         from './pages/public/QRMenu';
+import Workforce      from './pages/admin/Workforce';
+import Purchases      from './pages/admin/Purchases';
+import Loyalty        from './pages/admin/Loyalty';
+import Campaigns      from './pages/admin/Campaigns';
+import Waitlist       from './pages/admin/Waitlist';
+import Finance        from './pages/admin/Finance';
+import Forecasting    from './pages/admin/Forecasting';
+import Reviews        from './pages/admin/Reviews';
+import Delivery       from './pages/admin/Delivery';
+import DynamicPricing from './pages/admin/DynamicPricing';
 
 // Super-admin (platform) layout & pages
 import SuperAdminLayout from './components/layout/SuperAdminLayout';
@@ -189,6 +199,16 @@ export default function App() {
             <Route path="inventory"          element={<Inventory />} />
             <Route path="qr-manager"         element={<QRManager />} />
             <Route path="alerts"             element={<Alerts />} />
+            <Route path="workforce"          element={<Workforce />} />
+            <Route path="purchases"          element={<Purchases />} />
+            <Route path="loyalty"            element={<Loyalty />} />
+            <Route path="campaigns"          element={<Campaigns />} />
+            <Route path="waitlist"           element={<Waitlist />} />
+            <Route path="finance"            element={<Finance />} />
+            <Route path="forecasting"        element={<Forecasting />} />
+            <Route path="reviews"            element={<Reviews />} />
+            <Route path="delivery"           element={<Delivery />} />
+            <Route path="pricing"            element={<DynamicPricing />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />
