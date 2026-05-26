@@ -4,6 +4,8 @@
     "home": "Accueil",
     "login": "Connexion",
     "register": "Commencer",
+    "restaurants": "Trouver un restaurant",
+    "notifications": "Notifications",
     "dashboard": "Tableau de bord",
     "logout": "Déconnexion"
   },

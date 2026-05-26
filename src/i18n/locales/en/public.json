@@ -122,6 +122,26 @@
       "open": "Open Now"
     }
   },
+  "restaurants": {
+    "hero": {
+      "title": "Discover Every Restaurant",
+      "subtitle": "Search, filter, and find the perfect dining experience near you.",
+      "searchPlaceholder": "Search by name or cuisine…",
+      "cityPlaceholder": "City",
+      "searchBtn": "Search"
+    },
+    "sort": {
+      "topRated": "Top Rated",
+      "mostReviewed": "Most Reviewed",
+      "nameAZ": "Name A–Z"
+    },
+    "clearFilters": "Clear filters",
+    "resultsCount": "{{count}} results found",
+    "allCount": "{{count}} restaurants",
+    "loadMore": "Load more",
+    "emptyTitle": "No restaurants found",
+    "emptyDesc": "Try adjusting your search or clearing the filters."
+  },
   "footer": {
     "tagline": "The smartest way to discover, book, and manage restaurants across North Africa.",
     "platform": "Platform",

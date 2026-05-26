@@ -4,6 +4,8 @@
     "home": "Home",
     "login": "Login",
     "register": "Get Started",
+    "restaurants": "Find Restaurants",
+    "notifications": "Notifications",
     "dashboard": "Dashboard",
     "logout": "Logout"
   },

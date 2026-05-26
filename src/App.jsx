@@ -8,6 +8,7 @@ import { adminService } from './services/adminService';
 // Public layouts & pages
 import PublicLayout from './components/layout/PublicLayout';
 import Home from './pages/public/Home';
+import RestaurantsBrowse from './pages/public/Restaurants';
 import RestaurantPage from './pages/public/RestaurantPage';
 import VIPBookingPage from './pages/public/VIPBookingPage';
 import Maintenance from './pages/public/Maintenance';
@@ -138,6 +139,7 @@ export default function App() {
           {/* Public */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/restaurants" element={<RestaurantsBrowse />} />
           </Route>
 
           {/* Restaurant public pages — standalone */}

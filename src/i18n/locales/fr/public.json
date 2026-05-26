@@ -122,6 +122,26 @@
       "open": "Ouvert maintenant"
     }
   },
+  "restaurants": {
+    "hero": {
+      "title": "Découvrez Tous les Restaurants",
+      "subtitle": "Cherchez, filtrez et trouvez l'expérience culinaire parfaite près de chez vous.",
+      "searchPlaceholder": "Chercher par nom ou cuisine…",
+      "cityPlaceholder": "Ville",
+      "searchBtn": "Rechercher"
+    },
+    "sort": {
+      "topRated": "Mieux notés",
+      "mostReviewed": "Plus d'avis",
+      "nameAZ": "Nom A–Z"
+    },
+    "clearFilters": "Effacer les filtres",
+    "resultsCount": "{{count}} résultats trouvés",
+    "allCount": "{{count}} restaurants",
+    "loadMore": "Charger plus",
+    "emptyTitle": "Aucun restaurant trouvé",
+    "emptyDesc": "Essayez d'ajuster votre recherche ou d'effacer les filtres."
+  },
   "footer": {
     "tagline": "La façon la plus intelligente de découvrir, réserver et gérer les restaurants en Afrique du Nord.",
     "platform": "Plateforme",

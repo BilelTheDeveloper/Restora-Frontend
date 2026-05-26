@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Search, MapPin, Star, ArrowRight, ChevronRight,
-  Utensils, Clock, Shield, Award, Users, Globe,
+  Utensils, Clock, Shield, Award, Globe,
   CheckCircle, Quote, Smartphone, TrendingUp, Heart,
   Zap, Sparkles, UtensilsCrossed,
 } from 'lucide-react';
 import { restaurantService } from '../../services/restaurantService';
+import { useNavigate } from 'react-router-dom';
 
 /* ─── animated counter ─── */
 function useCountUp(end, duration = 2200, active = false) {
@@ -68,6 +69,7 @@ const TESTIMONIALS = [
 export default function Home() {
   const { t, i18n } = useTranslation('public');
   const isRTL = i18n.dir() === 'rtl';
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
   const [city,   setCity]   = useState('');
@@ -162,6 +164,7 @@ export default function Home() {
                 />
               </div>
               <button
+                onClick={() => navigate(`/restaurants${search || city ? `?search=${encodeURIComponent(search)}&city=${encodeURIComponent(city)}` : ''}`)}
                 className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-7 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-lg shadow-orange-500/35 whitespace-nowrap flex items-center justify-center gap-2"
               >
                 {t('home.hero.searchBtn')}
@@ -262,7 +265,7 @@ export default function Home() {
 
             <div className="text-center mt-12">
               <Link
-                to="/?browse=true"
+                to="/restaurants"
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-9 py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:gap-3"
               >
                 {t('home.topRated.viewAll')}
@@ -511,7 +514,7 @@ export default function Home() {
                     {t('home.cta.restaurantBtn')}
                   </Link>
                   <Link
-                    to="/"
+                    to="/restaurants"
                     className="bg-orange-600/30 hover:bg-orange-600/50 border border-white/25 text-white px-10 py-4 rounded-2xl font-bold text-sm transition-all duration-200 backdrop-blur-sm"
                   >
                     {t('home.cta.exploreBtn')}

@@ -122,6 +122,26 @@
       "open": "مفتوح الآن"
     }
   },
+  "restaurants": {
+    "hero": {
+      "title": "اكتشف جميع المطاعم",
+      "subtitle": "ابحث وصفّ واعثر على تجربة الطعام المثالية بالقرب منك.",
+      "searchPlaceholder": "ابحث بالاسم أو نوع المطبخ…",
+      "cityPlaceholder": "المدينة",
+      "searchBtn": "بحث"
+    },
+    "sort": {
+      "topRated": "الأعلى تقييماً",
+      "mostReviewed": "الأكثر تقييماً",
+      "nameAZ": "الاسم أ–ي"
+    },
+    "clearFilters": "مسح الفلاتر",
+    "resultsCount": "{{count}} نتيجة",
+    "allCount": "{{count}} مطعم",
+    "loadMore": "تحميل المزيد",
+    "emptyTitle": "لا توجد مطاعم",
+    "emptyDesc": "جرب تعديل بحثك أو مسح الفلاتر."
+  },
   "footer": {
     "tagline": "أذكى طريقة لاكتشاف المطاعم وحجزها وإدارتها في شمال أفريقيا.",
     "platform": "المنصة",
