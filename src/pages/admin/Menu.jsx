@@ -7,28 +7,11 @@ import {
   CheckCircle2, AlertCircle, Check, ImageIcon,
 } from 'lucide-react';
 import { restaurantService } from '../../services/restaurantService';
+import { uploadFile } from '../../services/uploadService';
 
 // ── Helpers ───────────────────────────────────────────────────
 let _lid = 1;
 const genLid = () => `lid-${_lid++}`;
-
-const resizeToBase64 = (file, maxW = 600, quality = 0.82) =>
-  new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const ratio = Math.min(1, maxW / img.width);
-        const canvas = document.createElement('canvas');
-        canvas.width  = img.width  * ratio;
-        canvas.height = img.height * ratio;
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
 
 const seedMenu = (raw) =>
   (raw ?? []).map(cat => ({
@@ -185,11 +168,13 @@ function ItemSlidePanel({ open, editing, categories, catIdx, onSave, onClose }) 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 8 * 1024 * 1024) { toast.error('Image must be under 8MB'); return; }
+    if (file.size > 15 * 1024 * 1024) { toast.error('Image must be under 15MB'); return; }
     setUploading(true);
     try {
-      const b64 = await resizeToBase64(file, 600, 0.82);
-      setF('image', b64);
+      const url = await uploadFile(file, 'menu');
+      setF('image', url);
+    } catch {
+      toast.error('Image upload failed');
     } finally {
       setUploading(false);
       e.target.value = '';

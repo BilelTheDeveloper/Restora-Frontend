@@ -8,6 +8,7 @@ import {
   CalendarRange, Palette, CheckCircle2, ChevronRight,
 } from 'lucide-react';
 import { restaurantService } from '../../services/restaurantService';
+import { uploadFile } from '../../services/uploadService';
 
 import TemplateClassic  from '../public/templates/TemplateClassic';
 import TemplateModern   from '../public/templates/TemplateModern';
@@ -45,21 +46,6 @@ function TKIcon({ size = 20 }) {
   );
 }
 
-const resizeToBase64 = (file, maxW = 1400, q = 0.85) =>
-  new Promise(resolve => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      const ratio  = Math.min(maxW / img.width, 1);
-      const canvas = document.createElement('canvas');
-      canvas.width  = Math.round(img.width  * ratio);
-      canvas.height = Math.round(img.height * ratio);
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve(canvas.toDataURL('image/jpeg', q));
-    };
-    img.src = url;
-  });
 
 const DAYS_ORDER = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 const DEFAULT_HOURS = DAYS_ORDER.map(day => ({
@@ -203,9 +189,11 @@ export default function ThemeCustomize() {
     if (!file) return;
     setUploadingField(field);
     try {
-      const base64 = await resizeToBase64(file, 1600, 0.85);
-      set(field, base64);
+      const url = await uploadFile(file, 'templates');
+      set(field, url);
       clearErr(field);
+    } catch {
+      toast.error('Image upload failed');
     } finally { setUploadingField(null); }
   };
 
@@ -214,8 +202,10 @@ export default function ThemeCustomize() {
     const key = `gallery-${idx}`;
     setUploadingField(key);
     try {
-      const base64 = await resizeToBase64(file, 1200, 0.82);
-      setGallery(idx, base64);
+      const url = await uploadFile(file, 'templates/gallery');
+      setGallery(idx, url);
+    } catch {
+      toast.error('Image upload failed');
     } finally { setUploadingField(null); }
   };
 

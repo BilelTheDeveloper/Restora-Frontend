@@ -8,6 +8,7 @@ import {
   CheckCircle2, Palette, Image as ImageIcon, UtensilsCrossed,
 } from 'lucide-react';
 import { restaurantService } from '../../services/restaurantService';
+import { uploadFile } from '../../services/uploadService';
 
 // ── Social icons ──────────────────────────────────────────────────────────────
 function IGIcon({ size = 18 }) {
@@ -204,11 +205,16 @@ export default function RestaurantSetup() {
   const setNested = (group, key, value) => setForm(p => ({ ...p, [group]: { ...p[group], [key]: value } }));
   const clearErr = (...keys) => setErrors(p => { const n = { ...p }; keys.forEach(k => delete n[k]); return n; });
 
-  const uploadImage = async (file, onDone) => {
-    // Since there's no dedicated upload endpoint, use a URL input approach
-    // Fallback: create an object URL for preview (user provides hosted URL)
-    const url = URL.createObjectURL(file);
-    onDone(url);
+  const uploadImage = async (file, onDone, key) => {
+    setUploading(key);
+    try {
+      const url = await uploadFile(file, 'restaurants');
+      onDone(url);
+    } catch {
+      toast.error('Image upload failed');
+    } finally {
+      setUploading(null);
+    }
   };
 
   const handleHourChange = (idx, field, value) => {
@@ -401,7 +407,7 @@ export default function RestaurantSetup() {
             <Field label="Hero Background Image">
               <div className="space-y-2">
                 <ImageCell src={form.heroBackground} label="Hero BG" uploading={uploading === 'hero'}
-                           onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('heroBackground', url)); }} />
+                           onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('heroBackground', url), 'hero'); }} />
                 <InputBox icon={Globe} value={form.heroBackground} placeholder="Paste image URL…"
                           onChange={e => set('heroBackground', e.target.value)} />
               </div>
@@ -409,7 +415,7 @@ export default function RestaurantSetup() {
             <Field label="Cover / Logo Image">
               <div className="space-y-2">
                 <ImageCell src={form.coverImage} label="Cover" uploading={uploading === 'cover'}
-                           onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('coverImage', url)); }} />
+                           onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('coverImage', url), 'cover'); }} />
                 <InputBox icon={Globe} value={form.coverImage} placeholder="Paste image URL…"
                           onChange={e => set('coverImage', e.target.value)} />
               </div>
@@ -451,7 +457,7 @@ export default function RestaurantSetup() {
               <div>
                 <Field label="About Image">
                   <ImageCell src={form.aboutImage} label="About" uploading={uploading === 'about'}
-                             onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('aboutImage', url)); }} />
+                             onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => set('aboutImage', url), 'about'); }} />
                   <div className="mt-2">
                     <InputBox icon={Globe} value={form.aboutImage} placeholder="Paste URL…"
                               onChange={e => set('aboutImage', e.target.value)} />
@@ -581,7 +587,7 @@ export default function RestaurantSetup() {
                 {form.images.map((img, idx) => (
                   <div key={idx} className="relative group">
                     <ImageCell src={img} uploading={uploading === `img-${idx}`}
-                               onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => setGalleryUrl(idx, url)); }} />
+                               onFile={e => { const f = e.target.files[0]; if (!f) return; uploadImage(f, url => setGalleryUrl(idx, url), `img-${idx}`); }} />
                     <input value={img} onChange={e => setGalleryUrl(idx, e.target.value)}
                            placeholder="Paste URL…"
                            className="mt-1.5 w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 placeholder-slate-300 outline-none border border-transparent focus:border-orange-300 transition-colors" />

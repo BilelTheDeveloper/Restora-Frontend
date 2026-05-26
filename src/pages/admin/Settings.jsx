@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { authService } from '../../services/authService';
+import { uploadFile } from '../../services/uploadService';
 import toast from 'react-hot-toast';
 import {
   User, Shield, Bell, Store, Clock, CreditCard, Palette,
@@ -228,8 +229,9 @@ function AccountTab({ user }) {
   const qc = useQueryClient();
   const [name,  setName]  = useState('');
   const [phone, setPhone] = useState('');
-  const [avatarPreview, setAvatarPreview] = useState(null);
-  const [avatarBase64,  setAvatarBase64]  = useState(null);
+  const [avatarPreview,  setAvatarPreview]  = useState(null);
+  const [avatarUrl,      setAvatarUrl]      = useState(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
   const fileRef = useRef(null);
 
   useEffect(() => {
@@ -265,12 +267,20 @@ function AccountTab({ user }) {
     onError: (e) => toast.error(e.response?.data?.message || 'Invalid code'),
   });
 
-  const handleAvatar = (e) => {
+  const handleAvatar = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => { setAvatarPreview(ev.target.result); setAvatarBase64(ev.target.result); };
-    reader.readAsDataURL(file);
+    setAvatarPreview(URL.createObjectURL(file));
+    setAvatarUploading(true);
+    try {
+      const url = await uploadFile(file, 'avatars');
+      setAvatarUrl(url);
+    } catch {
+      toast.error('Avatar upload failed');
+      setAvatarPreview(null);
+    } finally {
+      setAvatarUploading(false);
+    }
   };
 
   const displayAvatar = avatarPreview || user?.avatar;
@@ -279,7 +289,7 @@ function AccountTab({ user }) {
   const handleSave = () => profileMut.mutate({
     name: name.trim(),
     phone: phone.trim() || undefined,
-    ...(avatarBase64 ? { avatar: avatarBase64 } : {}),
+    ...(avatarUrl ? { avatar: avatarUrl } : {}),
   });
 
   return (
@@ -318,8 +328,8 @@ function AccountTab({ user }) {
         </FormField>
       </div>
 
-      <Btn onClick={handleSave} loading={profileMut.isPending} disabled={!name.trim()}>
-        <Save size={14} /> Save Profile
+      <Btn onClick={handleSave} loading={profileMut.isPending || avatarUploading} disabled={!name.trim() || avatarUploading}>
+        <Save size={14} /> {avatarUploading ? 'Uploading photo…' : 'Save Profile'}
       </Btn>
 
       <Divider />

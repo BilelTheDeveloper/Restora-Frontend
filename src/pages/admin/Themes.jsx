@@ -9,6 +9,7 @@ import {
   Globe, GlobeLock, Crown, AlertTriangle, Zap, Star,
 } from 'lucide-react';
 import { restaurantService } from '../../services/restaurantService';
+import { uploadFile } from '../../services/uploadService';
 import TemplateClassic  from '../public/templates/TemplateClassic';
 import TemplateModern   from '../public/templates/TemplateModern';
 import TemplateVivid    from '../public/templates/TemplateVivid';
@@ -356,22 +357,6 @@ function PrestigeThumb() {
   );
 }
 
-// ─── Image resize helper ────────────────────────────────────
-const resizeToBase64 = (file, maxW = 1200, q = 0.82) =>
-  new Promise(resolve => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      const ratio  = Math.min(maxW / img.width, 1);
-      const canvas = document.createElement('canvas');
-      canvas.width  = img.width  * ratio;
-      canvas.height = img.height * ratio;
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve(canvas.toDataURL('image/jpeg', q));
-    };
-    img.src = url;
-  });
 
 // ─── Customizer form field ──────────────────────────────────
 function FormField({ label, children }) {
@@ -550,7 +535,12 @@ export default function Themes() {
 
   const handleHeroUpload = async (file) => {
     if (!file) return;
-    setC('heroBackground', await resizeToBase64(file, 1600, 0.85));
+    try {
+      const url = await uploadFile(file, 'templates');
+      setC('heroBackground', url);
+    } catch {
+      toast.error('Image upload failed');
+    }
   };
 
   const previewRestaurant = restaurant ? {

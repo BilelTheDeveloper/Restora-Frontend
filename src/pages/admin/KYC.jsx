@@ -9,23 +9,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { authService } from '../../services/authService';
-
-// ─── Helpers ───────────────────────────────────────────────
-const resizeToBase64 = (file, maxW = 1000, quality = 0.82) =>
-  new Promise((resolve) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      const ratio = Math.min(maxW / img.width, 1);
-      const canvas = document.createElement('canvas');
-      canvas.width  = img.width  * ratio;
-      canvas.height = img.height * ratio;
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve(canvas.toDataURL('image/jpeg', quality));
-    };
-    img.src = url;
-  });
+import { uploadFile } from '../../services/uploadService';
 
 // ─── Constants ─────────────────────────────────────────────
 const DOC_TYPES = [
@@ -79,9 +63,18 @@ function StepBar({ current }) {
 // ─── Document upload slot ──────────────────────────────────
 function UploadSlot({ label, required = true, value, onChange }) {
   const ref = useRef();
+  const [uploading, setUploading] = useState(false);
   const handle = async (file) => {
     if (!file) return;
-    onChange(await resizeToBase64(file));
+    setUploading(true);
+    try {
+      const url = await uploadFile(file, 'kyc');
+      onChange(url);
+    } catch {
+      toast.error('Upload failed');
+    } finally {
+      setUploading(false);
+    }
   };
   return (
     <div>
@@ -99,7 +92,12 @@ function UploadSlot({ label, required = true, value, onChange }) {
         ].join(' ')}
       >
         <input ref={ref} type="file" accept="image/*,.pdf" className="hidden" onChange={e => handle(e.target.files?.[0])} />
-        {value ? (
+        {uploading ? (
+          <div className="p-8 flex flex-col items-center gap-3 bg-gray-50/80 dark:bg-white/3">
+            <div className="w-6 h-6 border-2 border-orange-400 border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs font-semibold text-gray-400">Uploading…</p>
+          </div>
+        ) : value ? (
           <div className="relative">
             <img src={value} alt={label} className="w-full h-36 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -117,7 +115,7 @@ function UploadSlot({ label, required = true, value, onChange }) {
             </div>
             <div className="text-center">
               <p className="text-xs font-semibold text-gray-600 dark:text-gray-400">Click to upload</p>
-              <p className="text-[10px] text-gray-400 mt-0.5">JPG, PNG · max 5 MB</p>
+              <p className="text-[10px] text-gray-400 mt-0.5">JPG, PNG · max 15 MB</p>
             </div>
           </div>
         )}
