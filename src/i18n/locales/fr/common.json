@@ -5,6 +5,9 @@
     "login": "Connexion",
     "register": "Commencer",
     "restaurants": "Trouver un restaurant",
+    "services": "Services",
+    "about": "À Propos",
+    "howItWorks": "Comment ça marche",
     "notifications": "Notifications",
     "dashboard": "Tableau de bord",
     "logout": "Déconnexion"

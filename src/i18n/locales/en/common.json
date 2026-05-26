@@ -5,6 +5,9 @@
     "login": "Login",
     "register": "Get Started",
     "restaurants": "Find Restaurants",
+    "services": "Services",
+    "about": "About Us",
+    "howItWorks": "How It Works",
     "notifications": "Notifications",
     "dashboard": "Dashboard",
     "logout": "Logout"

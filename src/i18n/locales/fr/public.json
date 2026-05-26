@@ -122,6 +122,182 @@
       "open": "Ouvert maintenant"
     }
   },
+  "services": {
+    "hero": {
+      "badge": "Écosystème Restaurant Complet",
+      "title": "Une Plateforme. Des Possibilités Infinies.",
+      "subtitle": "Restora connecte les amateurs de gastronomie avec les meilleurs restaurants tout en donnant aux propriétaires la technologie pour gérer une activité plus rentable."
+    },
+    "forDiners": {
+      "label": "Pour les Gourmands",
+      "title": "Découvrez, Réservez & Commandez — Tout en Un",
+      "subtitle": "Trouvez le restaurant parfait, réservez votre table en quelques secondes et commandez vos plats préférés en ligne, à tout moment.",
+      "items": {
+        "discover":  { "title": "Découverte Intelligente",    "desc": "Parcourez des centaines de restaurants vérifiés filtrés par cuisine, lieu, note et certification Halal." },
+        "reserve":   { "title": "Réservation Instantanée",   "desc": "Réservez une table avec la disponibilité en temps réel. Confirmation immédiate — sans appel téléphonique." },
+        "order":     { "title": "Commande en Ligne",          "desc": "Commandez directement depuis le menu pour sur place, à emporter ou livraison — votre choix, à chaque fois." },
+        "track":     { "title": "Suivi en Direct",            "desc": "Suivez votre commande de la cuisine à votre table en temps réel, étape par étape." },
+        "review":    { "title": "Avis Authentiques",          "desc": "Lisez de vrais avis de vrais clients et partagez votre propre expérience avec la communauté." },
+        "loyalty":   { "title": "Récompenses & Fidélité",     "desc": "Gagnez des points et débloquez des offres exclusives et avantages de vos restaurants préférés." }
+      }
+    },
+    "forOwners": {
+      "label": "Pour les Restaurateurs",
+      "title": "Le Système d'Exploitation Complet pour Restaurants",
+      "subtitle": "De la première commande aux rapports de fin de journée — tout ce dont vous avez besoin pour gérer un restaurant d'excellence, en un seul endroit.",
+      "items": {
+        "pos":          { "title": "POS Intelligent",              "desc": "Caisse enregistreuse rapide et intuitive conçue pour les restaurants à fort volume." },
+        "kitchen":      { "title": "Affichage Cuisine",             "desc": "Routage des commandes en temps réel avec gestion des priorités et suivi du statut." },
+        "reservations": { "title": "Gestion des Tables",            "desc": "Créateur de plan de salle visuel, configuration de réservation VIP et calendrier complet." },
+        "analytics":    { "title": "Analytique & Revenus",          "desc": "Insights approfondis sur les ventes, les heures de pointe, le comportement client et les tendances." },
+        "crm":          { "title": "CRM Client",                    "desc": "Créez des profils clients enrichis, suivez les visites et lancez des campagnes ciblées." },
+        "inventory":    { "title": "Inventaire & Fournisseurs",     "desc": "Suivez les stocks en temps réel, gérez les bons de commande et recevez des alertes de rupture." },
+        "staff":        { "title": "Gestion du Personnel",          "desc": "Plannings, rôles, suivi des présences et gestion de la paie dans un seul tableau de bord." },
+        "loyalty":      { "title": "Programmes de Fidélité",        "desc": "Créez des récompenses par points, des cartes de fidélité et des programmes VIP par paliers." },
+        "menu":         { "title": "Menu QR Numérique",             "desc": "Créez de beaux menus numériques et générez des codes QR pour chaque table, instantanément." },
+        "copilot":      { "title": "Copilote IA",                   "desc": "Posez n'importe quelle question sur votre activité — obtenez des insights et recommandations IA instantanés." },
+        "campaigns":    { "title": "Campagnes Marketing",           "desc": "Envoyez des campagnes SMS et email ciblées pour fidéliser et augmenter vos revenus." },
+        "pricing":      { "title": "Tarification Dynamique",        "desc": "Ajustez automatiquement les prix selon la demande, l'heure et les niveaux de stock." }
+      }
+    },
+    "pricing": {
+      "label": "Tarifs",
+      "title": "Des Tarifs Simples et Transparents",
+      "subtitle": "Commencez gratuitement et évoluez selon votre croissance. Pas de frais cachés, pas de contrats à long terme.",
+      "popular": "Le Plus Populaire",
+      "month": "/ mois",
+      "forever": "toujours gratuit",
+      "contactUs": "nous contacter",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Gratuit",
+          "period": "toujours gratuit",
+          "desc": "Parfait pour les nouveaux restaurants qui démarrent leur présence digitale.",
+          "features": ["Référencement sur Restora", "Menu QR numérique (jusqu'à 30 plats)", "Jusqu'à 50 commandes en ligne / mois", "Tableau de bord analytique de base", "Avis et notes clients", "Support par email"],
+          "cta": "Commencer Gratuitement"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "149 TND",
+          "period": "/ mois",
+          "desc": "Pour les restaurants établis prêts à passer à la vitesse supérieure.",
+          "features": ["Tout ce qui est dans Starter", "Système POS complet", "Affichage cuisine", "Réservations & plan de salle", "Commandes en ligne illimitées", "CRM client & programmes de fidélité", "Analytique avancée & rapports de revenus", "Inventaire & gestion du personnel", "Campagnes marketing", "Support prioritaire"],
+          "cta": "Essai Gratuit"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Sur mesure",
+          "period": "nous contacter",
+          "desc": "Pour les groupes de restauration, chaînes et grandes opérations multi-sites.",
+          "features": ["Tout ce qui est dans Pro", "Gestion multi-établissements", "Application en marque blanche", "Accès API & intégrations", "Copilote IA & prévisions de ventes", "Moteur de tarification dynamique", "Responsable de compte dédié", "Garantie SLA & support 24/7"],
+          "cta": "Contacter les Ventes"
+        }
+      }
+    },
+    "cta": {
+      "title": "Prêt à Élever votre Restaurant ?",
+      "subtitle": "Rejoignez des centaines de restaurants qui utilisent déjà Restora pour fidéliser leurs clients et développer leur activité.",
+      "btn": "Inscrire mon Restaurant Gratuitement"
+    }
+  },
+  "about": {
+    "hero": {
+      "badge": "Notre Histoire",
+      "title": "Conçu pour l'Avenir de la Restauration en Afrique du Nord",
+      "subtitle": "Restora est né d'une conviction simple : la grande cuisine mérite une grande technologie. Nous sommes là pour en faire une réalité."
+    },
+    "story": {
+      "label": "Aux origines",
+      "title": "De Tunisie, pour le Monde",
+      "p1": "Nous avons créé Restora parce que nous avons vu un fossé — des restaurants incroyables en Afrique du Nord n'avaient pas d'outils modernes pour gérer leur activité ou atteindre de nouveaux clients en ligne. Les propriétaires dépendaient des appels téléphoniques pour les réservations, des menus papier et des tableurs pour l'inventaire.",
+      "p2": "Nous avons décidé de construire la plateforme que nous aurions aimé avoir. Partis de Tunis en 2024, nous avons tout construit de zéro — en discutant directement avec des centaines de restaurateurs et de clients pour s'assurer d'avoir juste. Aujourd'hui, Restora propulse des restaurants à travers la Tunisie et s'étend dans toute la région.",
+      "founded": "Fondé",
+      "year": "2024",
+      "location": "Tunis, Tunisie",
+      "tag1": "Restaurants vérifiés KYC",
+      "tag2": "3 Langues supportées",
+      "tag3": "Plateforme en temps réel"
+    },
+    "values": {
+      "label": "Nos Valeurs",
+      "title": "Ce qui Nous Anime Chaque Jour",
+      "items": {
+        "transparency": { "title": "Transparence Totale",           "desc": "Pas de frais cachés, pas de surprises. Nous croyons en des relations honnêtes et claires avec chaque restaurant et chaque client sur notre plateforme." },
+        "quality":      { "title": "Qualité Sans Compromis",        "desc": "Chaque restaurant sur Restora est vérifié KYC et évalué avant d'être mis en ligne. Nous sélectionnons — nous n'agrégeons pas simplement." },
+        "community":    { "title": "Communauté d'Abord",            "desc": "Restora est un écosystème vivant. Propriétaires et clients grandissent ensemble, portés par la confiance mutuelle, les avis authentiques et la fidélité." },
+        "innovation":   { "title": "Toujours Innovants",            "desc": "Nous livrons de nouvelles fonctionnalités chaque semaine. Du Copilote IA à la tarification dynamique, nous construisons toujours ce qui vous aide à réussir." }
+      }
+    },
+    "mission": {
+      "label": "Notre Mission",
+      "title": "Élever Chaque Expérience Culinaire, un Restaurant à la Fois",
+      "body": "Notre mission est de rendre les expériences culinaires extraordinaires accessibles à tous en Afrique du Nord, tout en donnant aux restaurateurs la technologie dont ils ont besoin pour concurrencer et prospérer dans un monde numérique.",
+      "p1": "Connecter chaque amateur de gastronomie avec les meilleurs restaurants locaux, des trésors cachés aux adresses emblématiques.",
+      "p2": "Doter chaque restaurateur d'outils de niveau entreprise, accessibles dès le premier jour.",
+      "p3": "Construire un écosystème transparent et de confiance où la qualité et l'authenticité gagnent toujours."
+    },
+    "stats": {
+      "restaurants": "Restaurants",
+      "cities": "Villes couvertes",
+      "customers": "Clients satisfaits",
+      "rating": "Note moyenne"
+    },
+    "cta": {
+      "title": "Rejoignez la Famille Restora",
+      "subtitle": "Que vous soyez un gourmet en quête d'une bonne table ou un restaurateur prêt à grandir, Restora est fait pour vous.",
+      "dinerBtn": "Trouver des Restaurants",
+      "ownerBtn": "Inscrire mon Restaurant"
+    }
+  },
+  "howItWorks": {
+    "hero": {
+      "badge": "Simple & Rapide",
+      "title": "De Zéro à Table en Quelques Minutes",
+      "subtitle": "Que vous cherchiez un bon repas ou que vous gériez un restaurant, Restora vous met en route en quelques minutes — sans friction, sans complexité."
+    },
+    "tabs": {
+      "diners": "Je cherche à manger",
+      "owners": "Je suis Restaurateur"
+    },
+    "diners": {
+      "label": "Pour les Clients",
+      "title": "Votre Repas Parfait en 4 Étapes",
+      "steps": {
+        "1": { "title": "Créez votre Compte",             "desc": "Inscrivez-vous en moins de 30 secondes avec votre email. Pas de carte bancaire, pas de friction." },
+        "2": { "title": "Découvrez des Restaurants",      "desc": "Recherchez par cuisine, ville ou envie. Filtrez par Halal, note, ouvert maintenant, gamme de prix et plus." },
+        "3": { "title": "Réservez ou Commandez",          "desc": "Réservez votre table instantanément ou commandez en ligne pour sur place, à emporter ou livraison." },
+        "4": { "title": "Profitez & Partagez",            "desc": "Savourez un repas inoubliable, puis laissez un avis pour aider la communauté à trouver les meilleures adresses." }
+      }
+    },
+    "owners": {
+      "label": "Pour les Restaurateurs",
+      "title": "Lancez votre Restaurant en 4 Étapes Simples",
+      "steps": {
+        "1": { "title": "Inscrivez-vous & Vérifiez",      "desc": "Créez votre compte propriétaire et complétez notre vérification KYC rapide — approuvée en moins de 24 heures." },
+        "2": { "title": "Construisez votre Profil",       "desc": "Ajoutez les détails de votre restaurant, uploadez des photos, créez votre menu numérique et votre plan de salle." },
+        "3": { "title": "Mettez-vous en ligne",           "desc": "Publiez votre restaurant sur la plateforme et commencez à recevoir des réservations et commandes immédiatement." },
+        "4": { "title": "Grandissez avec les Données",    "desc": "Utilisez notre tableau de bord, CRM, outils marketing et Copilote IA pour suivre vos performances et développer votre activité." }
+      }
+    },
+    "faq": {
+      "title": "Questions Fréquemment Posées",
+      "items": {
+        "q1": { "q": "Restora est-il gratuit pour les restaurants ?",          "a": "Oui. Notre plan Starter est totalement gratuit et inclut un référencement, un menu QR numérique et jusqu'à 50 commandes par mois. Les fonctionnalités avancées sont disponibles sur notre plan Pro à partir de 149 TND/mois." },
+        "q2": { "q": "Combien de temps pour être mis en ligne ?",              "a": "La plupart des restaurants finalisent la configuration et sont en ligne en moins de 24 heures. Notre équipe d'onboarding vous accompagne à chaque étape, et la plupart des paramètres sont en libre-service." },
+        "q3": { "q": "Puis-je gérer plusieurs établissements ?",               "a": "Oui. Notre plan Enterprise supporte la gestion multi-établissements avec un tableau de bord unifié, une gestion partagée des menus et des analyses inter-établissements." },
+        "q4": { "q": "Mes données sont-elles sécurisées sur Restora ?",        "a": "La sécurité est notre priorité absolue. Nous utilisons le chiffrement AES-256, des tokens httpOnly, un verrouillage automatique de compte et respectons les normes de sécurité internationales." },
+        "q5": { "q": "Quelles langues Restora supporte-t-il ?",                "a": "Restora supporte pleinement l'arabe (avec mise en page RTL complète), le français et l'anglais. La plateforme s'adapte automatiquement à votre langue préférée sur toutes les pages." },
+        "q6": { "q": "Les clients peuvent-ils commander la livraison via Restora ?", "a": "Oui. Les restaurants sur le plan Pro peuvent activer la commande de livraison et gérer leurs propres livreurs ou s'intégrer avec des services de livraison tiers." }
+      }
+    },
+    "cta": {
+      "title": "Prêt à Commencer ?",
+      "subtitle": "Rejoignez des milliers de restaurants et de gourmands déjà sur Restora.",
+      "ownerBtn": "Inscrire mon Restaurant",
+      "dinerBtn": "Explorer les Restaurants"
+    }
+  },
   "restaurants": {
     "hero": {
       "title": "Découvrez Tous les Restaurants",

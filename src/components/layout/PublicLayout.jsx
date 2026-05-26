@@ -56,19 +56,27 @@ export default function PublicLayout() {
           </Link>
 
           {/* ── Centre nav (desktop) ── */}
-          <nav className="hidden md:flex items-center gap-1">
-            <NavLink
-              to="/restaurants"
-              className={({ isActive }) =>
-                `px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 ${
-                  isActive
-                    ? 'bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/8 hover:text-gray-900 dark:hover:text-white'
-                }`
-              }
-            >
-              {t('nav.restaurants')}
-            </NavLink>
+          <nav className="hidden lg:flex items-center gap-0.5">
+            {[
+              { to: '/restaurants',   key: 'nav.restaurants' },
+              { to: '/services',      key: 'nav.services'    },
+              { to: '/how-it-works',  key: 'nav.howItWorks'  },
+              { to: '/about',         key: 'nav.about'       },
+            ].map(({ to, key }) => (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) =>
+                  `px-3.5 py-2 rounded-xl text-sm font-semibold transition-colors duration-150 whitespace-nowrap ${
+                    isActive
+                      ? 'bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/8 hover:text-gray-900 dark:hover:text-white'
+                  }`
+                }
+              >
+                {t(key)}
+              </NavLink>
+            ))}
           </nav>
 
           {/* ── Right controls ── */}
@@ -165,7 +173,7 @@ export default function PublicLayout() {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors ms-1"
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors ms-1"
             >
               {mobileNavOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -174,20 +182,28 @@ export default function PublicLayout() {
 
         {/* Mobile nav panel */}
         {mobileNavOpen && (
-          <div className="md:hidden border-t border-gray-100 dark:border-white/5 bg-white dark:bg-gray-900 px-4 py-3 flex flex-col gap-1">
-            <NavLink
-              to="/restaurants"
-              onClick={() => setMobileNavOpen(false)}
-              className={({ isActive }) =>
-                `px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
-                  isActive
-                    ? 'bg-orange-50 dark:bg-orange-950/40 text-orange-500'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5'
-                }`
-              }
-            >
-              {t('nav.restaurants')}
-            </NavLink>
+          <div className="lg:hidden border-t border-gray-100 dark:border-white/5 bg-white dark:bg-gray-900 px-4 py-3 flex flex-col gap-1">
+            {[
+              { to: '/restaurants',  key: 'nav.restaurants' },
+              { to: '/services',     key: 'nav.services'    },
+              { to: '/how-it-works', key: 'nav.howItWorks'  },
+              { to: '/about',        key: 'nav.about'       },
+            ].map(({ to, key }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={() => setMobileNavOpen(false)}
+                className={({ isActive }) =>
+                  `px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-orange-50 dark:bg-orange-950/40 text-orange-500'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5'
+                  }`
+                }
+              >
+                {t(key)}
+              </NavLink>
+            ))}
             {!token && (
               <Link to="/login" onClick={() => setMobileNavOpen(false)}
                     className="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">

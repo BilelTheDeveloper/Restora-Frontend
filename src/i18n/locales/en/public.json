@@ -122,6 +122,182 @@
       "open": "Open Now"
     }
   },
+  "services": {
+    "hero": {
+      "badge": "Complete Restaurant Ecosystem",
+      "title": "One Platform. Infinite Possibilities.",
+      "subtitle": "Restora connects food lovers with great restaurants while giving owners the technology to run a smarter, more profitable business."
+    },
+    "forDiners": {
+      "label": "For Food Lovers",
+      "title": "Discover, Book & Order — All in One Place",
+      "subtitle": "Find the perfect restaurant, reserve your table in seconds, and order your favourite dishes — online, anytime.",
+      "items": {
+        "discover":  { "title": "Smart Discovery",       "desc": "Browse hundreds of verified restaurants filtered by cuisine, location, rating, and Halal certification." },
+        "reserve":   { "title": "Instant Reservations",  "desc": "Book a table with real-time availability. Get instant confirmation — no phone calls needed." },
+        "order":     { "title": "Online Ordering",       "desc": "Order directly from the menu for dine-in, takeaway, or delivery — your choice, every time." },
+        "track":     { "title": "Live Order Tracking",   "desc": "Follow your order from the kitchen to your table in real time, step by step." },
+        "review":    { "title": "Honest Reviews",        "desc": "Read genuine reviews from real customers and share your own experience with the community." },
+        "loyalty":   { "title": "Rewards & Loyalty",     "desc": "Earn points and unlock exclusive deals and perks from your favourite restaurants." }
+      }
+    },
+    "forOwners": {
+      "label": "For Restaurant Owners",
+      "title": "The Complete Restaurant Operating System",
+      "subtitle": "From the first order to end-of-day reports — everything you need to run a world-class restaurant, in one place.",
+      "items": {
+        "pos":          { "title": "Smart POS",              "desc": "Fast, intuitive point-of-sale designed for high-volume, busy restaurants." },
+        "kitchen":      { "title": "Kitchen Display",        "desc": "Real-time order routing to your kitchen with priority management and live status tracking." },
+        "reservations": { "title": "Table Management",       "desc": "Visual floor plan builder, VIP booking setup, and a full reservation calendar." },
+        "analytics":    { "title": "Analytics & Revenue",    "desc": "Deep insights into sales, peak hours, customer behaviour, and growth trends." },
+        "crm":          { "title": "Customer CRM",           "desc": "Build rich customer profiles, track visit history, and run targeted marketing campaigns." },
+        "inventory":    { "title": "Inventory & Suppliers",  "desc": "Track stock in real time, manage purchase orders, and get instant low-stock alerts." },
+        "staff":        { "title": "Staff Management",       "desc": "Schedules, roles, attendance tracking, and payroll management in one dashboard." },
+        "loyalty":      { "title": "Loyalty Programs",       "desc": "Create points-based rewards, stamp cards, and VIP tier programs to retain customers." },
+        "menu":         { "title": "QR Digital Menu",        "desc": "Build beautiful digital menus and generate QR codes for every table, instantly." },
+        "copilot":      { "title": "AI Copilot",             "desc": "Ask anything about your business — get instant AI-powered insights and recommendations." },
+        "campaigns":    { "title": "Marketing Campaigns",    "desc": "Send targeted SMS and email campaigns to drive repeat visits and grow revenue." },
+        "pricing":      { "title": "Dynamic Pricing",        "desc": "Automatically adjust menu prices based on demand, time of day, and stock levels." }
+      }
+    },
+    "pricing": {
+      "label": "Pricing",
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "Start free and scale as you grow. No hidden fees, no long-term contracts.",
+      "popular": "Most Popular",
+      "month": "/ month",
+      "forever": "forever",
+      "contactUs": "contact us",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Free",
+          "period": "forever",
+          "desc": "Perfect for new restaurants getting their digital presence started.",
+          "features": ["Restaurant listing on Restora", "QR digital menu (up to 30 items)", "Up to 50 online orders / month", "Basic analytics dashboard", "Customer reviews & ratings", "Email support"],
+          "cta": "Get Started Free"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "149 TND",
+          "period": "/ month",
+          "desc": "For established restaurants ready to level up their operations.",
+          "features": ["Everything in Starter", "Full POS system", "Kitchen display system", "Table reservations & floor plan", "Unlimited online orders", "Customer CRM & loyalty programs", "Advanced analytics & revenue reports", "Inventory & staff management", "Marketing campaigns", "Priority support"],
+          "cta": "Start Free Trial"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Custom",
+          "period": "contact us",
+          "desc": "For restaurant groups, chains, and large-scale multi-branch operations.",
+          "features": ["Everything in Pro", "Multi-branch management", "White-label app option", "API access & integrations", "AI Copilot & sales forecasting", "Dynamic pricing engine", "Dedicated account manager", "SLA guarantee & 24/7 support"],
+          "cta": "Contact Sales"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Elevate Your Restaurant?",
+      "subtitle": "Join hundreds of restaurants already using Restora to delight customers and grow their business.",
+      "btn": "List Your Restaurant Free"
+    }
+  },
+  "about": {
+    "hero": {
+      "badge": "Our Story",
+      "title": "Built for the Future of Dining in North Africa",
+      "subtitle": "Restora was born from a simple belief: great food deserves great technology. We are here to make that happen."
+    },
+    "story": {
+      "label": "Where it all began",
+      "title": "From Tunisia, to the World",
+      "p1": "We started Restora because we saw a gap — incredible restaurants across North Africa had no modern tools to manage their business or reach new customers online. Owners relied on phone calls for reservations, paper menus, and spreadsheets for inventory.",
+      "p2": "We set out to build the platform we wished existed. Starting in Tunis in 2024, we built every feature from scratch — talking directly to hundreds of restaurant owners and diners to make sure we got it exactly right. Today, Restora powers restaurants across Tunisia and is expanding across the region.",
+      "founded": "Founded",
+      "year": "2024",
+      "location": "Tunis, Tunisia",
+      "tag1": "KYC-Verified Restaurants",
+      "tag2": "3 Languages Supported",
+      "tag3": "Real-Time Platform"
+    },
+    "values": {
+      "label": "Our Values",
+      "title": "What Drives Us Every Day",
+      "items": {
+        "transparency": { "title": "Radical Transparency",       "desc": "No hidden fees, no surprise charges. We believe in honest, clear relationships with every restaurant and every diner on our platform." },
+        "quality":      { "title": "Quality Without Compromise", "desc": "Every restaurant on Restora is KYC-verified and reviewed before going live. We curate — we do not just aggregate." },
+        "community":    { "title": "Community First",            "desc": "Restora is a living ecosystem. Owners and diners grow together, powered by shared trust, genuine reviews, and real loyalty." },
+        "innovation":   { "title": "Always Innovating",          "desc": "We ship new features every week. From AI Copilot to dynamic pricing, we never stop building the tools that help you win." }
+      }
+    },
+    "mission": {
+      "label": "Our Mission",
+      "title": "Elevating Every Dining Experience, One Restaurant at a Time",
+      "body": "Our mission is to make extraordinary dining experiences accessible to everyone across North Africa, while giving restaurant owners the technology they need to compete and thrive in a digital-first world. We believe food has the power to bring communities together — and Restora is the platform that makes it possible.",
+      "p1": "Connect every food lover with the best local restaurants, from hidden gems to iconic spots.",
+      "p2": "Empower every restaurant owner with enterprise-grade tools, accessible from day one.",
+      "p3": "Build a trusted, transparent ecosystem where quality and authenticity always win."
+    },
+    "stats": {
+      "restaurants": "Restaurants",
+      "cities": "Cities covered",
+      "customers": "Happy customers",
+      "rating": "Average rating"
+    },
+    "cta": {
+      "title": "Join the Restora Family",
+      "subtitle": "Whether you are a diner looking for great food or an owner ready to grow, there is a place for you on Restora.",
+      "dinerBtn": "Find Restaurants",
+      "ownerBtn": "List Your Restaurant"
+    }
+  },
+  "howItWorks": {
+    "hero": {
+      "badge": "Simple & Fast",
+      "title": "From Zero to Dining in Minutes",
+      "subtitle": "Whether you are looking for a great meal or running a restaurant, Restora gets you up and running in minutes — no friction, no complexity."
+    },
+    "tabs": {
+      "diners": "I am Looking for Food",
+      "owners": "I Own a Restaurant"
+    },
+    "diners": {
+      "label": "For Diners",
+      "title": "Your Perfect Meal is 4 Steps Away",
+      "steps": {
+        "1": { "title": "Create Your Account",      "desc": "Sign up in under 30 seconds with your email. No credit card, no friction — just great food ahead." },
+        "2": { "title": "Discover Restaurants",     "desc": "Search by cuisine, city, or mood. Filter by Halal, rating, open now, price range, and more." },
+        "3": { "title": "Book a Table or Order",    "desc": "Reserve your table instantly, or order online for dine-in, takeaway, or home delivery." },
+        "4": { "title": "Enjoy & Share",            "desc": "Have an unforgettable meal, then leave a review to help others in the community find great food." }
+      }
+    },
+    "owners": {
+      "label": "For Restaurant Owners",
+      "title": "Launch Your Restaurant in 4 Simple Steps",
+      "steps": {
+        "1": { "title": "Register & Verify",        "desc": "Create your owner account and complete our quick KYC verification — approved in under 24 hours." },
+        "2": { "title": "Build Your Profile",       "desc": "Add your restaurant details, upload photos, create your digital menu, and set up your table floor plan." },
+        "3": { "title": "Go Live on Restora",       "desc": "Publish your restaurant to the platform and start receiving reservations and online orders immediately." },
+        "4": { "title": "Grow with Data",           "desc": "Use our analytics dashboard, CRM, marketing tools, and AI Copilot to track performance and scale your business." }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "q1": { "q": "Is Restora free for restaurants?",               "a": "Yes. Our Starter plan is completely free and includes a restaurant listing, QR digital menu, and up to 50 orders per month. Advanced features are available on our Pro plan starting at 149 TND/month." },
+        "q2": { "q": "How long does it take to go live?",              "a": "Most restaurants complete setup and go live within 24 hours. Our onboarding team is available to guide you, and most of the setup is fully self-service." },
+        "q3": { "q": "Can I manage multiple restaurant branches?",     "a": "Yes. Our Enterprise plan supports multi-location management with a unified dashboard, shared menu management, and cross-branch analytics." },
+        "q4": { "q": "Is my data secure on Restora?",                  "a": "Security is our top priority. We use bank-grade AES-256 encryption, httpOnly tokens, automatic account lockout, and comply with international data security standards." },
+        "q5": { "q": "What languages does Restora support?",           "a": "Restora fully supports Arabic (with full RTL layout), French, and English. The platform automatically adapts to your preferred language across all pages." },
+        "q6": { "q": "Can customers order delivery through Restora?",  "a": "Yes. Restaurants on the Pro plan can enable delivery ordering and manage their own drivers or integrate with third-party delivery services." }
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join thousands of restaurants and food lovers already on Restora.",
+      "ownerBtn": "Register Your Restaurant",
+      "dinerBtn": "Explore Restaurants"
+    }
+  },
   "restaurants": {
     "hero": {
       "title": "Discover Every Restaurant",
