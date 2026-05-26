@@ -122,6 +122,23 @@
       "open": "Open Now"
     }
   },
+  "footer": {
+    "tagline": "The smartest way to discover, book, and manage restaurants across North Africa.",
+    "platform": "Platform",
+    "discover": "Discover Restaurants",
+    "forOwners": "For Restaurant Owners",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "company": "Company",
+    "about": "About Us",
+    "careers": "Careers",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "madeWith": "Made with",
+    "inTunisia": "in Tunisia"
+  },
   "restaurant": {
     "reviews": "reviews",
     "order": "Order Now",

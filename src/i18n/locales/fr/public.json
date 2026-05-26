@@ -122,6 +122,23 @@
       "open": "Ouvert maintenant"
     }
   },
+  "footer": {
+    "tagline": "La façon la plus intelligente de découvrir, réserver et gérer les restaurants en Afrique du Nord.",
+    "platform": "Plateforme",
+    "discover": "Découvrir les restaurants",
+    "forOwners": "Pour les restaurateurs",
+    "pricing": "Tarifs",
+    "blog": "Blog",
+    "company": "Entreprise",
+    "about": "À propos",
+    "careers": "Carrières",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "contact": "Contact",
+    "rights": "Tous droits réservés.",
+    "madeWith": "Fait avec",
+    "inTunisia": "en Tunisie"
+  },
   "restaurant": {
     "reviews": "avis",
     "order": "Commander",

@@ -66,7 +66,7 @@ const TESTIMONIALS = [
 ];
 
 export default function Home() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('public');
   const isRTL = i18n.dir() === 'rtl';
 
   const [search, setSearch] = useState('');

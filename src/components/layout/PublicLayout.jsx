@@ -5,7 +5,7 @@ import { ThemeToggle, LanguageSwitcher, Button, Avatar } from '../ui';
 import { Utensils, Share2, MessageCircle, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 
 export default function PublicLayout() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['common', 'public']);
   const { user, token, logout } = useAuthStore();
 
   return (
@@ -65,7 +65,7 @@ export default function PublicLayout() {
                 <span className="text-xl font-black text-white">Restora</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                {t('footer.tagline', 'The smartest way to discover, book, and manage restaurants across North Africa.')}
+                {t('public:footer.tagline')}
               </p>
               <div className="flex gap-3">
                 {[
@@ -83,13 +83,13 @@ export default function PublicLayout() {
 
             {/* platform */}
             <div>
-              <h4 className="text-white font-bold text-sm mb-4">{t('footer.platform', 'Platform')}</h4>
+              <h4 className="text-white font-bold text-sm mb-4">{t('public:footer.platform')}</h4>
               <ul className="space-y-2.5">
                 {[
-                  { label: t('footer.discover', 'Discover Restaurants'), to: '/' },
-                  { label: t('footer.forOwners', 'For Restaurant Owners'), to: '/register' },
-                  { label: t('footer.pricing', 'Pricing'), to: '/register' },
-                  { label: t('footer.blog', 'Blog'), to: '/' },
+                  { label: t('public:footer.discover'), to: '/' },
+                  { label: t('public:footer.forOwners'), to: '/register' },
+                  { label: t('public:footer.pricing'), to: '/register' },
+                  { label: t('public:footer.blog'), to: '/' },
                 ].map((l) => (
                   <li key={l.label}>
                     <Link to={l.to} className="text-gray-400 hover:text-white text-sm transition-colors duration-150">
@@ -102,13 +102,13 @@ export default function PublicLayout() {
 
             {/* company */}
             <div>
-              <h4 className="text-white font-bold text-sm mb-4">{t('footer.company', 'Company')}</h4>
+              <h4 className="text-white font-bold text-sm mb-4">{t('public:footer.company')}</h4>
               <ul className="space-y-2.5">
                 {[
-                  { label: t('footer.about', 'About Us'), to: '/' },
-                  { label: t('footer.careers', 'Careers'), to: '/' },
-                  { label: t('footer.privacy', 'Privacy Policy'), to: '/' },
-                  { label: t('footer.terms', 'Terms of Service'), to: '/' },
+                  { label: t('public:footer.about'), to: '/' },
+                  { label: t('public:footer.careers'), to: '/' },
+                  { label: t('public:footer.privacy'), to: '/' },
+                  { label: t('public:footer.terms'), to: '/' },
                 ].map((l) => (
                   <li key={l.label}>
                     <Link to={l.to} className="text-gray-400 hover:text-white text-sm transition-colors duration-150">
@@ -121,7 +121,7 @@ export default function PublicLayout() {
 
             {/* contact */}
             <div>
-              <h4 className="text-white font-bold text-sm mb-4">{t('footer.contact', 'Contact')}</h4>
+              <h4 className="text-white font-bold text-sm mb-4">{t('public:footer.contact')}</h4>
               <ul className="space-y-3">
                 <li className="flex items-start gap-2.5 text-gray-400 text-sm">
                   <Mail size={15} className="text-orange-400 shrink-0 mt-0.5" />
@@ -142,10 +142,10 @@ export default function PublicLayout() {
           {/* divider + bottom bar */}
           <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-gray-500 text-xs">
-              © {new Date().getFullYear()} Restora. {t('footer.rights', 'All rights reserved.')}
+              © {new Date().getFullYear()} Restora. {t('public:footer.rights')}
             </p>
             <div className="flex items-center gap-4">
-              <span className="text-xs text-gray-500">{t('footer.madeWith', 'Made with')} ❤️ {t('footer.inTunisia', 'in Tunisia')}</span>
+              <span className="text-xs text-gray-500">{t('public:footer.madeWith')} ❤️ {t('public:footer.inTunisia')}</span>
             </div>
           </div>
         </div>
