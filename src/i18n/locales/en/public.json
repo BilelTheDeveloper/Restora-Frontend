@@ -1,15 +1,120 @@
 {
   "home": {
     "hero": {
-      "title": "Discover Great Restaurants",
-      "subtitle": "Order online, book a table, or explore nearby restaurants",
-      "searchPlaceholder": "Search restaurants or cuisine...",
+      "badge": "#1 Restaurant Platform in North Africa",
+      "titleLine1": "Taste the Best,",
+      "titleLine2": "Every Single Day.",
+      "subtitle": "Discover top-rated restaurants, reserve your table in seconds, and order your favourite dishes online — all in one place.",
+      "searchPlaceholder": "Search restaurants or cuisine…",
       "cityPlaceholder": "City",
       "searchBtn": "Search"
     },
-    "featured": "Featured Restaurants",
     "searchResults": "Search Results",
-    "noResults": "No restaurants found",
+    "noResults": "No restaurants found. Try a different search.",
+    "featured": "Featured Restaurants",
+    "topRated": {
+      "label": "Curated for you",
+      "title": "Top Rated Restaurants",
+      "subtitle": "Handpicked based on real reviews, quality, and unforgettable dining experiences.",
+      "top": "Top",
+      "viewMenu": "Explore menu",
+      "viewAll": "View All Restaurants",
+      "comingSoon": "Coming soon"
+    },
+    "howItWorks": {
+      "title": "Three Steps to Your Perfect Meal",
+      "subtitle": "Ordering or booking has never been this easy. Get started in under a minute.",
+      "steps": {
+        "search": {
+          "title": "Search & Discover",
+          "desc": "Browse hundreds of restaurants by cuisine, location, or rating."
+        },
+        "choose": {
+          "title": "Book or Order",
+          "desc": "Reserve a table for any occasion or order directly from the menu."
+        },
+        "enjoy": {
+          "title": "Enjoy the Experience",
+          "desc": "Savour every bite and share your review to help others discover great food."
+        }
+      }
+    },
+    "features": {
+      "label": "Why Restora",
+      "title": "Everything You Need, In One Platform",
+      "subtitle": "Restora brings together discovery, booking, ordering, and management under one roof.",
+      "items": {
+        "verified": {
+          "title": "Verified Restaurants",
+          "desc": "Every restaurant is KYC-verified and reviewed before appearing on our platform."
+        },
+        "realtime": {
+          "title": "Real-Time Availability",
+          "desc": "Live table availability, instant booking confirmation — no waiting, no surprises."
+        },
+        "quality": {
+          "title": "Quality Guaranteed",
+          "desc": "Ratings and reviews from real customers ensure you always make the right choice."
+        },
+        "digital": {
+          "title": "Digital-First Experience",
+          "desc": "QR menus, online ordering, and digital receipts — the future of dining today."
+        },
+        "growth": {
+          "title": "Grow Your Restaurant",
+          "desc": "Powerful analytics, CRM, and marketing tools to help owners scale faster."
+        },
+        "love": {
+          "title": "Built with Passion",
+          "desc": "Crafted by food lovers for food lovers — designed to make every meal memorable."
+        }
+      }
+    },
+    "about": {
+      "label": "Our Mission",
+      "title": "Redefining Dining in North Africa",
+      "desc": "Restora is more than a restaurant platform — it's a movement to elevate the dining experience across the region, empowering both customers and restaurant owners with world-class technology.",
+      "mission1": "Connecting food lovers with the best local restaurants, from hidden gems to iconic spots.",
+      "mission2": "Giving restaurant owners the tools they need to run smarter, grow faster, and delight every guest.",
+      "mission3": "Building a transparent, trusted ecosystem where quality and authenticity always win.",
+      "cta": "List Your Restaurant",
+      "ctaSecondary": "Sign In",
+      "stats": {
+        "restaurants": "Restaurants",
+        "cities": "Cities",
+        "customers": "Happy Customers",
+        "rating": "Average Rating"
+      }
+    },
+    "testimonials": {
+      "label": "What People Say",
+      "title": "Loved by Thousands",
+      "subtitle": "Real stories from real customers and restaurant partners across the region.",
+      "items": {
+        "1": {
+          "text": "Restora completely changed how I discover restaurants. The UI is gorgeous and booking a table takes literally 10 seconds.",
+          "name": "Sofia M.",
+          "role": "Food Blogger, Tunis"
+        },
+        "2": {
+          "text": "As a restaurant owner, the analytics dashboard alone is worth it. I can track revenue, manage reservations, and run campaigns all in one place.",
+          "name": "Ahmed K.",
+          "role": "Restaurant Owner, Sfax"
+        },
+        "3": {
+          "text": "I use Restora every weekend to find new places to eat with my family. The reviews are honest and the search is super fast.",
+          "name": "Marie L.",
+          "role": "Regular Customer, Tunis"
+        }
+      }
+    },
+    "cta": {
+      "badge": "Join 500+ restaurants already on Restora",
+      "title": "Ready to Transform Your Restaurant?",
+      "subtitle": "Join hundreds of restaurants already using Restora to delight customers and grow their business.",
+      "restaurantBtn": "Get Started Free",
+      "exploreBtn": "Explore Restaurants"
+    },
     "filters": {
       "all": "All",
       "halal": "Halal",

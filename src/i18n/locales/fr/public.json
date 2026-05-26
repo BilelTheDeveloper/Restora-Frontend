@@ -1,15 +1,120 @@
 {
   "home": {
     "hero": {
-      "title": "Découvrez de Super Restaurants",
-      "subtitle": "Commandez en ligne, réservez une table ou explorez les restaurants près de chez vous",
-      "searchPlaceholder": "Chercher un restaurant ou une cuisine...",
+      "badge": "Plateforme N°1 des restaurants en Afrique du Nord",
+      "titleLine1": "Savourez le Meilleur,",
+      "titleLine2": "Chaque Jour.",
+      "subtitle": "Découvrez les meilleurs restaurants, réservez votre table en quelques secondes et commandez vos plats préférés en ligne — tout en un seul endroit.",
+      "searchPlaceholder": "Chercher un restaurant ou une cuisine…",
       "cityPlaceholder": "Ville",
       "searchBtn": "Rechercher"
     },
-    "featured": "Restaurants en vedette",
     "searchResults": "Résultats de recherche",
-    "noResults": "Aucun restaurant trouvé",
+    "noResults": "Aucun restaurant trouvé. Essayez une autre recherche.",
+    "featured": "Restaurants en vedette",
+    "topRated": {
+      "label": "Sélectionnés pour vous",
+      "title": "Restaurants les Mieux Notés",
+      "subtitle": "Triés sur le volet selon les avis réels, la qualité et l'expérience culinaire.",
+      "top": "Top",
+      "viewMenu": "Voir le menu",
+      "viewAll": "Voir tous les restaurants",
+      "comingSoon": "Bientôt disponible"
+    },
+    "howItWorks": {
+      "title": "Trois Étapes vers le Repas Parfait",
+      "subtitle": "Commander ou réserver n'a jamais été aussi simple. Lancez-vous en moins d'une minute.",
+      "steps": {
+        "search": {
+          "title": "Cherchez & Découvrez",
+          "desc": "Parcourez des centaines de restaurants par cuisine, lieu ou note."
+        },
+        "choose": {
+          "title": "Réservez ou Commandez",
+          "desc": "Réservez une table pour toute occasion ou commandez directement depuis le menu."
+        },
+        "enjoy": {
+          "title": "Profitez de l'Expérience",
+          "desc": "Savourez chaque bouchée et partagez votre avis pour aider les autres à découvrir de bons restaurants."
+        }
+      }
+    },
+    "features": {
+      "label": "Pourquoi Restora",
+      "title": "Tout ce dont vous avez Besoin, en Une Plateforme",
+      "subtitle": "Restora réunit découverte, réservation, commande et gestion sous un même toit.",
+      "items": {
+        "verified": {
+          "title": "Restaurants Vérifiés",
+          "desc": "Chaque restaurant est vérifié KYC et évalué avant d'apparaître sur notre plateforme."
+        },
+        "realtime": {
+          "title": "Disponibilité en Temps Réel",
+          "desc": "Disponibilité des tables en direct, confirmation instantanée — sans attente, sans surprise."
+        },
+        "quality": {
+          "title": "Qualité Garantie",
+          "desc": "Les notes et avis de vrais clients vous garantissent toujours le bon choix."
+        },
+        "digital": {
+          "title": "Expérience 100% Digitale",
+          "desc": "Menus QR, commande en ligne et reçus numériques — le futur de la restauration, aujourd'hui."
+        },
+        "growth": {
+          "title": "Développez votre Restaurant",
+          "desc": "Des outils puissants d'analytique, CRM et marketing pour aider les propriétaires à grandir plus vite."
+        },
+        "love": {
+          "title": "Conçu avec Passion",
+          "desc": "Créé par des passionnés de gastronomie — pour rendre chaque repas inoubliable."
+        }
+      }
+    },
+    "about": {
+      "label": "Notre Mission",
+      "title": "Réinventer la Restauration en Afrique du Nord",
+      "desc": "Restora est plus qu'une plateforme de restaurants — c'est un mouvement pour élever l'expérience culinaire dans toute la région, en offrant aux clients et aux restaurateurs une technologie de classe mondiale.",
+      "mission1": "Mettre en relation les amateurs de gastronomie avec les meilleurs restaurants locaux, des trésors cachés aux adresses emblématiques.",
+      "mission2": "Donner aux restaurateurs les outils nécessaires pour gérer plus intelligemment, grandir plus vite et satisfaire chaque client.",
+      "mission3": "Construire un écosystème transparent et de confiance où la qualité et l'authenticité gagnent toujours.",
+      "cta": "Inscrire mon Restaurant",
+      "ctaSecondary": "Se connecter",
+      "stats": {
+        "restaurants": "Restaurants",
+        "cities": "Villes",
+        "customers": "Clients Satisfaits",
+        "rating": "Note Moyenne"
+      }
+    },
+    "testimonials": {
+      "label": "Ce qu'ils disent",
+      "title": "Plébiscité par des Milliers d'Utilisateurs",
+      "subtitle": "De vraies histoires de vrais clients et partenaires restaurateurs à travers la région.",
+      "items": {
+        "1": {
+          "text": "Restora a complètement changé ma façon de découvrir les restaurants. L'interface est magnifique et réserver une table prend littéralement 10 secondes.",
+          "name": "Sofia M.",
+          "role": "Blogueuse Culinaire, Tunis"
+        },
+        "2": {
+          "text": "En tant que restaurateur, le tableau de bord analytique suffit à tout justifier. Je suis mes revenus, gère mes réservations et lance des campagnes, tout en un seul endroit.",
+          "name": "Ahmed K.",
+          "role": "Restaurateur, Sfax"
+        },
+        "3": {
+          "text": "J'utilise Restora chaque week-end pour découvrir de nouveaux endroits avec ma famille. Les avis sont honnêtes et la recherche est ultra rapide.",
+          "name": "Marie L.",
+          "role": "Cliente Régulière, Tunis"
+        }
+      }
+    },
+    "cta": {
+      "badge": "Rejoignez 500+ restaurants déjà sur Restora",
+      "title": "Prêt à Transformer votre Restaurant ?",
+      "subtitle": "Rejoignez des centaines de restaurants qui utilisent déjà Restora pour fidéliser leurs clients et développer leur activité.",
+      "restaurantBtn": "Commencer Gratuitement",
+      "exploreBtn": "Explorer les Restaurants"
+    },
     "filters": {
       "all": "Tous",
       "halal": "Halal",
